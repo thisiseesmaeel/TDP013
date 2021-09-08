@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function () { init();} );
 
 function post(msg)
 {
-    if(msg.substring(1).length > 140 || msg.substring(1).length == 0)
+    if(msg.length > 140 || msg.length == 0)
     {
         let errorBox = document.getElementById("error_div");
         errorBox.textContent = "Error!";
@@ -29,7 +29,6 @@ function post(msg)
     //// Skapar knappen
     let statusBtn = document.createElement("button");
     statusBtn.setAttribute("id", "status_button" + msgCounter.toString());
-    msgCounter += 1;
     statusBtn.appendChild(document.createTextNode("Unread"));
     messageStatusBox.appendChild(statusBtn);
     ////
@@ -49,32 +48,39 @@ function post(msg)
 }
 
 function init(){
-    console.log(document.cookie);
+    let searchField = document.getElementById("message_input");
+    searchField.value = "";
+    //console.log(document.cookie);
+
+    //let mylist = [["hadi", 1], ["ali", 3], ["oskar", 2]];
+    //mylist.sort(function(a,b){return a[1] - b[1];}); // fallande sortering efter andra element
+    //mylist.sort(function(x,y){return x[1].localeCompare(y[1]);});
+    //console.log(mylist);
+    
     if(document.cookie)
     {
         let cookiesList = document.cookie.split(";");
+        let sortedCookies = [];
         console.log(cookiesList);
 
-        for(let i = 0; i < cookiesList.length; i++)
-        {   
-            console.log(i.toString());
-            
-            let reg = cookiesList[i].match(/(.*)=(.*)/);
-            let msg = reg[1];
-            let mgsStatus = reg[2];
-            console.log(i.toString() + " " + msg + " " + mgsStatus );
-
-            post(msg);
-            if(mgsStatus == "read")
-            {
-                changeStatus(i + 1);
-            }
-
-            
+        for(let i = 1; i <= cookiesList.length; i++)
+        {               
+            let reg = cookiesList[i - 1].match(/(.*)=(.*)#(\d+)/);
+            sortedCookies.push([reg[1], reg[2], reg[3]]);            
         }
+        console.log(sortedCookies);
+        sortedCookies.sort(function(a,b){return a[2] - b[2];});
+        for(let i = 1; i <= sortedCookies.length; i++)
+        {
+            post(sortedCookies[i-1][0]);
+            msgCounter += 1;
+            if(sortedCookies[i-1][1] == "read")
+            {
+                changeStatus(i);
+            }
+        }
+        console.log(sortedCookies);
         msgCounter = cookiesList.length + 1;
-
-        console.log(">>>>>" + msgCounter.toString());
  
     }
         
@@ -83,15 +89,16 @@ function init(){
     document.getElementById("send_button").addEventListener("click", function (event){
 
         event.preventDefault();
-        console.log(document.getElementById("message_input").value);
         if(post(document.getElementById("message_input").value))
         {
-            document.cookie = document.getElementById("message_input").value + "=unread";
+            document.cookie = document.getElementById("message_input").value + "=unread" + "#" + msgCounter.toString();
             let searchField = document.getElementById("message_input");
-            searchField.value = " ";
+            searchField.value = "";
             let errorBox = document.getElementById("error_div");
             errorBox.textContent = "";
+            msgCounter += 1;
             statusListener();
+            console.log("hereeeeeeee: " + msgCounter.toString());
         }     
 
     })
@@ -103,7 +110,7 @@ function init(){
 
 function statusListener()
 {
-
+    console.log("msgCounter : " + msgCounter.toString());
     for (let i = 1; i < msgCounter; i++)
     {
         document.getElementById("status_button" + i.toString()).addEventListener("click", function (event){
@@ -119,9 +126,8 @@ function changeStatus(i)
 {
     let statusBtn = document.getElementById("status_button" + i.toString());
     statusBtn.innerHTML = "read";
-    // msg1=unread ; msg2=unread
     let x = document.getElementById("message_text_div" + i.toString());
-    document.cookie =  x.textContent + "=read";
+    document.cookie =  x.textContent + "=read" + "#" + i.toString();
     console.log(document.cookie);
     statusBtn.style.color = "green";
     let messageTextBox = document.getElementById("message_text_div" + i.toString());
