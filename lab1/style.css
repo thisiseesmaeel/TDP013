@@ -54,7 +54,7 @@ form button {
     width: 70%;
 }
 .error_box {
-    color: red;
+    color: rgb(141, 140, 140);
     font-size: 15px;
     font-style: italic;
     background-color:rgb(179, 179, 179);
