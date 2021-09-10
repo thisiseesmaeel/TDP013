@@ -5,6 +5,9 @@
         <link rel="stylesheet" href="style.css">
         <script src="javascript.js"></script>
 
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+
     </head>
         
 
@@ -13,13 +16,13 @@
         <header>
             <h1>Twitter Parody</h1>
         </header>
-
-        <div class = "main" id = "main_box">
-            <form>
-                <input id="message_input" type="text"  value="search" placeholder="Search...">
-                <button id="send_button" >Send</button> <!--onclick = "send();">Send</button>-->
+        <div class = "container main" id = "main_box">
+            <form class="col-md-10">
+                <input id="message_input" class="col-md-9" type="text"  value="search" placeholder="Search...">
+                <button id="send_button" class = "btn col-md-3 btn-primary">Send</button> <!--onclick = "send();">Send</button>-->
             </form>
             <div class = "error_box" id = "error_div"></div>
+            
             
         </div>
          
