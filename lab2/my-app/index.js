@@ -9,54 +9,61 @@ const ObjectID = require('mongodb').ObjectID
 const { MongoClient } = require('mongodb')
 let url = "mongodb://localhost:27017/"
 
-// För testing
-app.get('/', function (req, res) {
-    res.send("Welcome!")
-});
-
 // Spara meddelande
 app.post('/save', function (req, res) {
     const { message, status } = req.body;
 
-    MongoClient.connect(url, (err, dbs) => {
-        if(err) { throw err; }
-        let dbo = dbs.db("tdp013")
-        dbo.collection("messages").insertOne({"message" : message, "status" : status})
-        .then((data) => {
-            dbs.close()
-        })
-        .catch((err) => {
-            console.log("Something went wrong..." + err)
-            dbs.close()
-        })
-        
-    });
+    if(message == null || status == null)
+    {
+        res.status(400).send("Wrong parameter!")        
+    }
+    else{
+        MongoClient.connect(url, (err, dbs) => {
+            if(err) { throw err; }
+            let dbo = dbs.db("tdp013")
+            dbo.collection("messages").insertOne({"message" : message, "status" : status})
+            .then((data) => {
+                dbs.close()
+            })
+            .catch((err) => {
+                console.log("Something went wrong..." + err)
+                dbs.close()
+            })
+            
+        });
+    
+        res.send('Post fungerar!')
 
-    res.send('Post fungerar!')
+    }
 });
 
 
 // Markera som läst/oläst
 app.post('/flag', function (req, res) {
     const { id, status } = req.body;
-
-    MongoClient.connect(url, (err, dbs) => {
-        if(err) { throw err; }
-        let dbo = dbs.db("tdp013")
-        let mongo = require('mongodb')
-
-        dbo.collection("messages").updateOne({"_id": new mongo.ObjectId(id)}, {$set: {"status" : status}})
-        .then((data) => {
-            res.send('Update fungerar!')
-            dbs.close()
-        })
-        .catch((err) => {
-            console.log("Something went wrong..." + err)
-            dbs.close()
-        })
-        
-    });
+    if(id == null || status == null)
+    {
+        res.status(400).send("Wrong parameter!")        
+    }
+    else
+    {
+        MongoClient.connect(url, (err, dbs) => {
+            if(err) { throw err; }
+            let dbo = dbs.db("tdp013")
+            let mongo = require('mongodb')
     
+            dbo.collection("messages").updateOne({"_id": new mongo.ObjectId(id)}, {$set: {"status" : status}})
+            .then((data) => {
+                res.send('Update fungerar!')
+                dbs.close()
+            })
+            .catch((err) => {
+                console.log("Something went wrong...")
+                dbs.close()
+            })
+            
+        });
+    }
 });
 
 // Hämta meddelande
@@ -94,6 +101,25 @@ app.get('/getall', function (req, res) {
 });
 
 
+// Felhantering
+app.all('/flag', function (req, res) {
+    res.status(405).send("Bad method!")
+});
+app.all('/save', function (req, res) {
+    res.status(405).send("Bad method!")
+});
+app.all('/getall', function (req, res) {
+    res.status(405).send("Bad method!")
+});
+app.all('/get', function (req, res) {
+    res.status(405).send("Bad method!")
+});
+
+
+app.use(function (req, res, next) {
+
+    res.status(404).send("Sorry! The page you are looking does not exist!")
+})
 
 
 let server = app.listen(3000, () => {
