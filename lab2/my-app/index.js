@@ -12,8 +12,9 @@ let url = "mongodb://localhost:27017/"
 // Spara meddelande
 app.post('/save', function (req, res) {
     const { message, status } = req.body;
-
-    if(message == null || status == null)
+    let validStatus = false
+    if(status == "read" || status == "unread") { validStatus = true}
+    if(message == null || message.length  > 140 || status == false )
     {
         res.status(400).send("Wrong parameter!")        
     }
@@ -40,28 +41,36 @@ app.post('/save', function (req, res) {
 
 // Markera som läst/oläst
 app.post('/flag', function (req, res) {
-    const { id, status } = req.body;
-    if(id == null || status == null)
+    const { id, status } = req.body
+
+    let validStatus = false
+    if(status == "read" || status == "unread") { validStatus = true}
+
+    if(validStatus == false)
     {
-        res.status(400).send("Wrong parameter!")        
+        res.status(400).send("Wrong parameter!")
     }
-    else
-    {
+    else{
         MongoClient.connect(url, (err, dbs) => {
             if(err) { throw err; }
             let dbo = dbs.db("tdp013")
             let mongo = require('mongodb')
-    
+
             dbo.collection("messages").updateOne({"_id": new mongo.ObjectId(id)}, {$set: {"status" : status}})
             .then((data) => {
-                res.send('Update fungerar!')
-                dbs.close()
-            })
-            .catch((err) => {
-                console.log("Something went wrong...")
-                dbs.close()
-            })
-            
+                    if(data.matchedCount == 0){
+                        res.status(400).send("Wrong parameter!")
+                    }
+                    else{
+                        res.send('Update fungerar!')
+                    }
+                    dbs.close()
+                })
+                .catch((err) => {
+                    console.log("Something went wrong..." + err)
+                    dbs.close()
+                })
+                
         });
     }
 });
@@ -69,7 +78,7 @@ app.post('/flag', function (req, res) {
 // Hämta meddelande
 app.get('/get', function (req, res) {
     const id = req.query.id
-
+    
     MongoClient.connect(url, (err, dbs) => {
         if(err) { throw err; }
         
@@ -78,8 +87,12 @@ app.get('/get', function (req, res) {
 
         dbo.collection("messages").find({"_id": new mongo.ObjectId(id)}).toArray((err, result) => {
             if(err){ throw err; }
-            
-            res.send(result)
+            if(result.length == 0){
+                res.status(400).send("Wrong parameter!")
+            }
+            else{
+                res.send(result)
+            }
             dbs.close()
         })
     });
@@ -92,8 +105,6 @@ app.get('/getall', function (req, res) {
         if(err) { throw err; }
         let dbo = dbs.db("tdp013")   
         dbo.collection("messages").find({}).toArray((err, result) => {
-            if(err){ throw err; }
-            
             res.send(result)
             dbs.close()
         })
@@ -126,4 +137,4 @@ let server = app.listen(3000, () => {
     let host = server.address().address
     let port = server.address().port
     console.log(`Lyssnar på http://${host}:${port}`)
-})  
+})
