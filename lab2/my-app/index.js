@@ -14,7 +14,7 @@ app.post('/save', function (req, res) {
     const { message, status } = req.body;
     let validStatus = false
     if(status == "read" || status == "unread") { validStatus = true}
-    if(message.length <= 0 || message.length  > 140 || status == false )
+    if(message.length <= 0 || message.length  > 140 || validStatus == false )
     {
         res.status(400).send("Wrong parameter!")        
     }
@@ -32,9 +32,7 @@ app.post('/save', function (req, res) {
             })
             
         });
-    
         res.send('Post fungerar!')
-
     }
 });
 
