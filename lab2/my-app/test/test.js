@@ -23,10 +23,10 @@ describe("Run tests", () => {
     })
   })
   
-describe('Post "Hello World!!!"', () => {
+describe('Post "Hello"', () => {
   it('Should post the message', async () => {
     const res = await superagent.post(url + 'save')
-    .send({message: "Hello World!!!", status: "unread"})
+    .send({message: "Hello", status: "unread"})
     
     assert.equal(res.statusCode, "200")
     
@@ -48,7 +48,7 @@ describe('Get all messages', () => {
   describe('Changing status code of first message', () => {
     it('Should change the status to "read"', async () => {
       const res = await superagent.post(url + 'flag')
-      .send({id: "61424edbae0a291a8c3fd354", status: "read"})
+      .send({id: "614d81f463694fd02f99ef1d", status: "read"})
 
       assert.equal(res.statusCode, 200)
     
@@ -58,7 +58,7 @@ describe('Get all messages', () => {
   describe('Changing status code of first message', () => {
     it('Should change the status to "unread"', async () => {
       const res = await superagent.post(url + 'flag')
-      .send({id: "61424edbae0a291a8c3fd354", status: "unread"})
+      .send({id: "614d81f463694fd02f99ef1d", status: "unread"})
 
       assert.equal(res.statusCode, 200)
       
@@ -68,7 +68,7 @@ describe('Get all messages', () => {
 
   describe('Get one specific message', () => {
     it('Should return the desired message', () => {
-      superagent.get(url + 'get/?id=61424edbae0a291a8c3fd354', (err, res) => {
+      superagent.get(url + 'get/?id=614d81f463694fd02f99ef1d', (err, res) => {
         if(err) {console.log(err)}
         const message = res.body[0].message
         const status = res.body[0].status
@@ -131,7 +131,7 @@ describe('Get all messages', () => {
   describe('Trying to reach /bruh with a post method', () => {
     it('should return statuscode 404', () => {
       superagent.post(url + "/bruh")
-      .send({id: "61424edbae0a291a8c3fd354", status: "read"})
+      .send({id: "614d81f463694fd02f99ef1d", status: "read"})
       .end((err, res) =>{
           assert.equal(err.status, 404);
       })
@@ -152,7 +152,7 @@ describe('Get all messages', () => {
   describe("Trying to change an invalid status code of a message.", () => {
     it('Should return 400 error', async () => {
       await superagent.post(url + 'flag')
-      .send({id: "61424edbae0a291a8c3fd354", status: "lol"})
+      .send({id: "614d81f463694fd02f99ef1d", status: "lol"})
       .catch((err) => {
         assert.equal(err.status, 400)
       })
