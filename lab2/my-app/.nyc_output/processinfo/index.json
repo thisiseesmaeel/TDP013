@@ -1,0 +1,1 @@
+{"processes":{"26bc918b-4950-44d9-bf67-58df59ad76aa":{"parent":"bd7fee93-1fd5-4859-a0f6-054bc30dd05a","children":[]},"bd7fee93-1fd5-4859-a0f6-054bc30dd05a":{"parent":null,"children":["26bc918b-4950-44d9-bf67-58df59ad76aa"]}},"files":{"/home/hadan326/TDP013/lab2/my-app/server.js":["26bc918b-4950-44d9-bf67-58df59ad76aa"]},"externalIds":{}}

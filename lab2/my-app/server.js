@@ -8,6 +8,12 @@ const app = express();
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(xssClean()); // sanitizes the get and post requests
+app.use((req, res, next) => {
+ res.header('Access-Control-Allow-Origin', '*');
+ res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With',
+ 'Content-Type, Accept');
+ next();
+});
 
 const ObjectID = require('mongodb').ObjectID;
 
@@ -34,9 +40,11 @@ app.post('/save', function (req, res) {
         MongoClient.connect(url, (err, dbs) => {
             if(err) { throw err; }
             let dbo = dbs.db("tdp013");
+	   
             dbo.collection("messages").insertOne({"message" : message, "status" : status})
-            .then((data) => {
-                dbs.close();
+		.then((data) => {
+		    res.send(data.insertedId);
+                    dbs.close();
             })
             .catch((err) => {
                 console.log("Something went wrong..." + err)
@@ -44,7 +52,7 @@ app.post('/save', function (req, res) {
             })
             
         });
-        res.send('Post fungerar!');
+	//res.send("Fungerar"); 
     }
 });
 
