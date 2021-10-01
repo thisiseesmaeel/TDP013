@@ -48,7 +48,7 @@ describe('Get all messages', () => {
   describe('Changing status code of first message', () => {
     it('Should change the status to "read"', async () => {
       const res = await superagent.post(url + 'flag')
-      .send({id: "614d81f463694fd02f99ef1d", status: "read"})
+      .send({id: "6156c2a539b69bed2864fbdd", status: "read"})
 
       assert.equal(res.statusCode, 200)
     
@@ -58,7 +58,7 @@ describe('Get all messages', () => {
   describe('Changing status code of first message', () => {
     it('Should change the status to "unread"', async () => {
       const res = await superagent.post(url + 'flag')
-      .send({id: "614d81f463694fd02f99ef1d", status: "unread"})
+      .send({id: "6156c2a539b69bed2864fbdd", status: "unread"})
 
       assert.equal(res.statusCode, 200)
       
@@ -68,7 +68,7 @@ describe('Get all messages', () => {
 
   describe('Get one specific message', () => {
     it('Should return the desired message', () => {
-      superagent.get(url + 'get/?id=614d81f463694fd02f99ef1d', (err, res) => {
+      superagent.get(url + 'get/?id=6156c2a539b69bed2864fbdd', (err, res) => {
         if(err) {console.log(err)}
         const message = res.body[0].message
         const status = res.body[0].status

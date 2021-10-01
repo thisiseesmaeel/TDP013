@@ -41,7 +41,7 @@ app.post('/save', function (req, res) {
             if(err) { throw err; }
             let dbo = dbs.db("tdp013");
 	   
-            dbo.collection("messages").insertOne({"message" : message, "status" : status})
+            dbo.collection("messages").insertOne({"message" : message, "status" : status, "time": new Date()})
 		.then((data) => {
 		    res.send(data.insertedId);
                     dbs.close();
@@ -125,7 +125,7 @@ app.get('/getall', function (req, res) {
     MongoClient.connect(url, (err, dbs) => {
         if(err) { throw err; }
         let dbo = dbs.db("tdp013");
-        dbo.collection("messages").find({}).toArray((err, result) => {
+        dbo.collection("messages").find({}).sort({"time": 1}).toArray((err, result) => {
             res.send(result);
             dbs.close();
         })
