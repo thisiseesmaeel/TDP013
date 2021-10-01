@@ -3,6 +3,11 @@ $(function(){
   $("#send_button").on("click", function(e){
     e.preventDefault();
     let msg = $("#message_input").val();
+    if(msg.length <= 0 || msg.length > 140)
+    {
+        $("div.error_box").text("You cannot write empty message or more than 140 characters!");
+    }
+
     $.post("http://localhost:3000/save",
     {
         message : msg,
