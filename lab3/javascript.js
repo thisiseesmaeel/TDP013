@@ -25,7 +25,7 @@ $(function(){
             
             $messageTextBox.text(msg);
         }
-        console.log(status);
+        setOnClickListener();
     });
   });
   
@@ -54,6 +54,7 @@ $(function(){
                 if(messages[index].status == "read")
                 {
                     $messageMainBox.css("background-color", "rgb(86, 133, 89)");
+                    $statusBtn.text("read");
                     $statusBtn.css("color", "green");
                 }
 
