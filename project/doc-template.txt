@@ -1,0 +1,12 @@
+{
+	firstname : "firstname",
+	lastname: "lastname",
+	email: "email@email.com"
+	username: "user1"
+	password: "user111",
+	friends: ["user2", "user3", "user4"],
+	posts: ["blablbablablab lba lbnala ", "blablbablablab lba lbnala ", "blablbablablab lba lbnala "],
+	send-reqests: ["user5"],
+	received-requests: ["user6", "user7", "user8"]
+
+}
