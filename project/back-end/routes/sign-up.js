@@ -16,9 +16,11 @@ router.post('/', function(req, res, next) {
         
         let dbo = database.db("database");
         
-        dbo.collection("users").insertOne({"firstname": firstname, "lastname": lastname, "email": email, "username": username, "password": password})
+        dbo.collection("users").insertOne({"firstname": firstname, "lastname": lastname, "email": email, "username": username, "password": password,
+        "friends": [], "posts": [], "send-reqests": [], "received-requests": []})
         .then((data) => {
-            res.status(200).send(data);
+            let userProfile = {"firstname": firstname, "lastname": lastname, "email": email, "friends": [], "posts": [], "send-reqests": [], "received-requests": []};
+            res.status(200).send(userProfile);
             database.close();
         })
         .catch((error) => {

@@ -13,7 +13,7 @@ router.get('/', function(req, res, next) {
         res.status(400).send("Wrong parameter!");
     }
     MongoClient.connect(url, (error, database) => {
-        if(error) { throw errorr; }
+        if(error) { throw error; }
         let dbo = database.db("database");
 
         dbo.collection("users").find({"username": username, "password": password}).toArray((error, result) => {
