@@ -6,25 +6,36 @@ const url = "mongodb://localhost:27017/";
 
 /* GET users listing. */
 router.post('/', function(req, res, next) {
-  const {me, friendUsername, post} = req.body;
+  const {myUsername, loggedInID, friendUsername, post} = req.body;
   if(typeof(post) != "string")
   { 
       res.status(400).send("Wrong parameter!");
   }
-  MongoClient.connect(url, (error, database) => {
-      if(error) { throw error; }
-      let dbo = database.db("database");
-      dbo.collection("users").updateOne({"username": friendUsername}, { $push: {"posts": {"body": post, "owner": me, "time": new Date()}}}
-        ,(error, result) => {
-          if(error){ throw error; }
-          if(result.length == 0){
-              res.status(401).send("Wrong username or password!");
-          }else{
-              res.status(200).send(result);
-          }
-          database.close();
+  else{
+    MongoClient.connect(url, (error, database) => {
+        if(error) { throw error; }
+        let dbo = database.db("database");
+        // legtimera att allt stämmer med användaren
+        dbo.collection("users").find({"username": myUsername}).toArray((error, result) => {
+            if(error){ throw error; }
+            if(result[0].loggedInID == parseInt(loggedInID) && result[0].loggedInID != null){
+                dbo.collection("users").updateOne({"username": friendUsername}, { $push: {"posts": {"body": post, "owner": myUsername, "time": new Date()}}}
+                  ,(error, result) => {
+                    if(error){ throw error; }
+                    if(result.length == 0){
+                        res.status(401).send("Wrong username or password!");
+                    }else{
+                        res.status(200).send(result);
+                    }
+                    database.close();
+                });
+            }
+            else{
+                res.status(401).send("Unauthorized!");
+            }
         });
-    });
+      });
+  }
 });
 module.exports = router;
 

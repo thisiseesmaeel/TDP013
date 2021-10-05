@@ -11,6 +11,8 @@ let loginRouter = require('./routes/login');
 let signUpRouter = require('./routes/sign-up');
 let findUserRouter = require('./routes/find-user');
 let writePostRouter = require('./routes/write-post');
+let friendProfileRouter = require('./routes/friend-profile');
+let logOutRouter = require('./routes/logout');
 
 var app = express();
 
@@ -20,7 +22,7 @@ app.set('view engine', 'jade');
 
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -28,6 +30,8 @@ app.use('/login', loginRouter);
 app.use('/signup', signUpRouter);
 app.use('/finduser', findUserRouter);
 app.use('/writepost', writePostRouter);
+app.use('/friendprofile', friendProfileRouter);
+app.use('/logout', logOutRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

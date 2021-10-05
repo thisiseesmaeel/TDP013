@@ -13,13 +13,13 @@ router.post('/', function(req, res, next) {
     }
     MongoClient.connect(url, (error, database) => {
         if(error) { throw error; }
-        
         let dbo = database.db("database");
-        
+        loggedInID = {"loggedInID": Math.floor(100000 + Math.random() * 900000)};
         dbo.collection("users").insertOne({"firstname": firstname, "lastname": lastname, "email": email, "username": username, "password": password,
-        "friends": [], "posts": [], "send-reqests": [], "received-requests": []})
+        "friends": [], "posts": [], "sendRequests": [], "receivedRequests": [], "loggedInID": loggedInID["loggedInID"]})
         .then((data) => {
-            let userProfile = {"firstname": firstname, "lastname": lastname, "email": email, "friends": [], "posts": [], "send-reqests": [], "received-requests": []};
+            let userProfile = {"firstname": firstname, "lastname": lastname, "email": email
+            , "friends": [], "posts": [], "sendRequests": [], "receiveRequests": [], "loggedInID": loggedInID["loggedInID"]};
             res.status(200).send(userProfile);
             database.close();
         })

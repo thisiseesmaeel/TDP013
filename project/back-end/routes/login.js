@@ -15,15 +15,20 @@ router.get('/', function(req, res, next) {
     MongoClient.connect(url, (error, database) => {
         if(error) { throw error; }
         let dbo = database.db("database");
-
-        dbo.collection("users").find({"username": username, "password": password}).toArray((error, result) => {
+        loggedInID = {"loggedInID": Math.floor(100000 + Math.random() * 900000)};
+        dbo.collection("users").updateOne({"username": username, "password": password}, {$set : {"loggedInID": loggedInID["loggedInID"]}}, (error, result) => {
             if(error){ throw error; }
             if(result.length == 0){
                 res.status(401).send("Wrong username or password!");
             }else{
-                res.status(200).send(result);
-            }
-            database.close();
+                dbo.collection("users").find({"username": username}).toArray((error, res1)=> {
+                let userProfile = {"firstname": res1[0].firstname, "lastname": res1[0].lastname, "email": res1[0].email
+                , "friends": res1[0].friends, "posts": res1[0].post, "sendRequests": res1[0].sendRequests,
+                "receivedRequests": res1[0].receivedRequests, "loggedInID": loggedInID["loggedInID"]};
+                res.status(200).send(userProfile);
+                database.close();
+                });
+            }  
         });
     });
 
