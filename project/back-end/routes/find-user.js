@@ -9,7 +9,7 @@ router.get('/', function(req, res, next) {
     const userArr = user.split(" ");
     firstname = userArr[0];
     lastname = userArr[1];
-    if(typeof(firstname) != "string" || typeof(lastname) != "string")
+    if(typeof(myUsername) != "string" || typeof(loggedInID) != "number" || typeof(user) != "string")
     { 
         res.status(400).send("Wrong parameter!");
     }
@@ -19,7 +19,7 @@ router.get('/', function(req, res, next) {
         dbo.collection("users").find({"username": myUsername}).toArray((error, result) => {
             if(error){ throw error; }
                 if(result.length > 1){ res.status(500).send("Internal Server Error");}
-                if(result[0].loggedInID == parseInt(loggedInID) && result[0].loggedInID != null){
+                if(result[0].loggedInID == loggedInID && result[0].loggedInID != null){
                     let myFriends = result[0].friends;
                     dbo.collection("users").find({"firstname": firstname, "lastname": lastname}).toArray((error, searchResult) => {
                         if(error){ throw error; }
