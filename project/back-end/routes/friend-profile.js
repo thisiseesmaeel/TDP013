@@ -7,7 +7,7 @@ const url = "mongodb://localhost:27017/";
 
 /*Displaying friends post. */
 router.get('/', function(req, res, next) {
-    const {myUsername, friendUsername} = req.body;
+    const {myUsername, loggedInID, friendUsername} = req.body;
     if(typeof(friendUsername) != "string")
     { 
         res.status(400).send("Wrong parameter!");
@@ -16,16 +16,34 @@ router.get('/', function(req, res, next) {
         MongoClient.connect(url, (error, database) => {
             if(error) { throw error; }
             let dbo = database.db("database");
-            dbo.collection("users").find({"username": friendUsername}).toArray((error, result) => {
+            dbo.collection("users").find({"username": myUsername}).toArray((error, result) => {
                 if(error){ throw error; }
-                if(result.length == 0){
-                    res.status(500).send("Internal Server Error!");
+                if(result.length <= 0){
+                    res.status(404).send("User not found!");
+                    database.close();
+                }  
+                else if(!result[0].friends.includes(friendUsername))
+                {
+                    res.status(404).send("Friend not found!");
+                    database.close();
+                }else if(result[0].loggedInID == parseInt(loggedInID) && result[0].loggedInID != null){
+                    dbo.collection("users").find({"username": friendUsername}).toArray((error, res1) => {
+                        if(error){ throw error; }
+                        if(res1.length <= 0){
+                            res.status(404).send("Friend not found!");
+                            database.close();
+                        }else{
+                            res.status(200).send(res1[0].posts);
+                            database.close();      
+                        }  
+                    });
                 }else{
-                    res.status(200).send(result[0].posts);
-                  
+                    res.status(401).send("Unauthorized!");
+                    database.close();
                 }
-                database.close();
+
             });
+            
         });
     }
 });
