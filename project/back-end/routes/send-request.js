@@ -16,9 +16,22 @@ router.post('/', function(req, res, next) {
             let dbo = database.db("database");
             dbo.collection("users").find({"username": myUsername}).toArray((error, result) => {
                 if(error){ throw error; }
-                if(result[0].loggedInID == loggedInID && result[0].loggedInID != null)
+                let addedUser = {"firstname": otherFirstname, "lastname": otherLastname, "username": otherUsername};
+                friendsObject = result[0].friends;
+                let alreadyFriend = false;
+                for(const friend of friendsObject){
+                    if(friend.firstname == otherFirstname)
+                    {
+                        alreadyFriend = true;
+                        break;
+                    }
+                }
+                if(alreadyFriend){
+                    res.status(403).send("You are already friends!");
+                    database.close();
+                }
+                else if(result[0].loggedInID == loggedInID && result[0].loggedInID != null)
                 {
-                    let addedUser = {"firstname": otherFirstname, "lastname": otherLastname, "username": otherUsername};
                     dbo.collection("users").updateOne({"username": myUsername}, {$addToSet: {"sendRequests": addedUser}})
                     .then((obj) => {
                         let myInfo  = {"firstname": result[0].firstname, "lastname": result[0].lastname, "username": myUsername};
