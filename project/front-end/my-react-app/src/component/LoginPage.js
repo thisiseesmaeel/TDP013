@@ -51,11 +51,18 @@ export class LoginPage extends Component {
                 'Content-Type': 'application/json'
               },
             body: JSON.stringify(this.state)
-        }).then(res => res.json()).then((data) => {
+        }).then((res) => 
+        {   
+            if(!res.ok) {throw new Error(res.status)}
+            return res.json()
+        })
+        .then((data) => {
             console.log(data)
-        }).catch(err => console.log(err))
-
-        this.props.changePage("profile-page");
+            this.props.changePage("profile-page")
+        }).catch((err) => {
+            console.log(err.message)
+        })
+        
     }
     render() {
         return (

@@ -3,6 +3,11 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var cors = require('cors');
+
+
+
+
 
 var indexRouter = require('./routes/index');
 
@@ -21,6 +26,9 @@ let ignoreRequestRouter = require('./routes/ignore-request');
 
 var app = express();
 
+app.use(cors());
+
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -30,6 +38,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
 
 app.use('/login', loginRouter);
 app.use('/signup', signUpRouter);
@@ -42,6 +51,7 @@ app.use('/sendrequest', sendRequestRouter);
 app.use('/showfriend', showFriendRouter);
 app.use('/acceptrequest', acceptRequestRouter);
 app.use('/ignorerequest', ignoreRequestRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
