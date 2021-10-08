@@ -10,17 +10,12 @@ export class FriendPage extends Component {
                 <input type="text" className="w-75" style={{height: "35px"}} id="userName" placeholder=""/>
                 <button className="btn btn-primary">Write post</button>
             </div>
-            <PostList postList = { this.props.data.posts } />
-            {/* <div className="test mt-4 p-3">
-                <h2>Post1</h2>
-                <p>Blablabbla Blablabbla Blablabbla Blablabbla Blablabbla Blablabbla</p>
+            <div className = "row" >
+                <div className = "col-md-8 mx-auto" >
+                    <PostList postList = { this.props.data.posts } />
+                </div>
             </div>
             
-            <div className="test mt-4 p-3">
-                <h2>Post2</h2>
-                <p>Blablabbla Blablabbla Blablabbla Blablabbla Blablabbla Blablabbla</p>
-            </div> */}
-
         </div>
         )
     }

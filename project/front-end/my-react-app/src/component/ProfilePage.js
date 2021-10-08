@@ -42,10 +42,13 @@ export class ProfilePage extends Component {
         return (
             <div>
                 <div className="test p-3">
-                    <h1 className = "text-primary">Welcome { this.props.data.firstname }</h1>
+                    <div className="d-flex justify-content-between">
+                        <h1 className = "text-primary">Welcome { this.props.data.firstname }</h1>
+                        <button className="btn btn-danger mr-2 btn-sm"> Logout </button>
+                    </div>
                 </div>
                 <div className="test text-center p-3">
-                    <button className="w-25 btn btn-primary" onClick = {() => this.props.changePage("find-user-page")} >Find friend</button>
+                    <button className="w-25 btn btn-primary" onClick = {() => this.props.changePage("find-user-page", this.props.data)} >Find friend</button>
                 </div>
 
                 <div className ="test p-4 text-center">

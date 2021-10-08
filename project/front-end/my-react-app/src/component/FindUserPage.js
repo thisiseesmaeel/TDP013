@@ -8,14 +8,17 @@ export class FindUserPage extends Component {
                 <input type="text" className="w-75" style={{height: "35px"}} id="userName" placeholder=""/>
                 <button className="btn btn-primary">Search</button>
                 </div>
-        
-                <div className="test mt-4 p-3">
-                <h2>User1</h2>
-                <p>Blablabbla Blablabbla Blablabbla Blablabbla Blablabbla Blablabbla</p>
-                <div className="text-center">
-                <button className="w-50 btn btn-primary">Send Request</button>
-                </div>
-        
+
+                <div className = "row" >
+                    <div className = "col-md-8 mx-auto" >
+                        <div className="test mt-4 p-3">
+                            <h2>User1</h2>
+                            <p>Blablabbla Blablabbla</p>
+                            <div className="text-center">
+                                <button className="w-50 btn btn-primary">Send Request</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         )
