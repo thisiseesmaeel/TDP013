@@ -57,8 +57,8 @@ export class LoginPage extends Component {
             return res.json()
         })
         .then((data) => {
-            console.log(data)
-            this.props.changePage("profile-page")
+            //console.log(data)
+            this.props.changePage("profile-page", data)
         }).catch((err) => {
             console.log(err.message)
         })

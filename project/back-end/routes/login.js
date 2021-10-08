@@ -24,7 +24,7 @@ router.post('/', function(req, res, next) {
             }else{
                 dbo.collection("users").find({"username": username}).toArray((error, res1)=> {
                 let userProfile = {"firstname": res1[0].firstname, "lastname": res1[0].lastname, "email": res1[0].email
-                , "friends": res1[0].friends, "posts": res1[0].post, "sendRequests": res1[0].sendRequests,
+                , "friends": res1[0].friends, "posts": res1[0].posts, "sendRequests": res1[0].sendRequests,
                 "receivedRequests": res1[0].receivedRequests, "loggedInID": loggedInID["loggedInID"]};
                 res.status(200).send(userProfile);
                 database.close();

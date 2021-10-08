@@ -13,14 +13,16 @@ export class Page extends Component {
     {
         super(props)
         this.state = {
-            page: "start-page"
+            page: "start-page",
+            data: {}
         }
         this.changePage = this.changePage.bind(this)
     }
 
-    changePage = (param) => {
+    changePage = (param, data = {}) => {
         console.log("Change page clicked!")
-        this.setState({ page : param })
+        console.log(data)
+        this.setState({ page : param, data : data})
     }
     render() {
         switch(this.state.page){
@@ -31,7 +33,7 @@ export class Page extends Component {
             case "login-page":
                 return <LoginPage changePage = { this.changePage }/>
             case "profile-page":
-                return <ProfilePage changePage = {this.changePage} />
+                return <ProfilePage changePage = {this.changePage} data = { this.state.data }/>
             case "find-user-page":
                 return <FindUserPage changePage = {this.changePage} />
             case "friend-page":
