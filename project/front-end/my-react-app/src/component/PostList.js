@@ -4,7 +4,7 @@ import Post from './Post'
 export class PostList extends Component {
     render() {
     return this.props.postList.map((post) => (
-         <Post key = { post.time } body = { post.body } owner = { post.owner } /> 
+         <Post key = { post.time } body = { post.body } owner = { post.owner } time = { post.time }/> 
         ))
     }
 }

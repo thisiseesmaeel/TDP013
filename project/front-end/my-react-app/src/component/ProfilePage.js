@@ -9,11 +9,11 @@ export class ProfilePage extends Component {
         this.showFriend = this.showFriend.bind(this)
     }
 
-    showFriend = (username) => {
+    showFriend = (params) => {
         const object = {
             myUsername: this.props.data.username,
             loggedInID: this.props.data.loggedInID,
-            friendUsername: username
+            friendUsername: params
         }
         fetch("http://localhost:3000/friendprofile", {
             method: 'POST',
@@ -27,11 +27,8 @@ export class ProfilePage extends Component {
             return res.json()
         })
         .then((data) => {
-            console.log("This is your friend profile: ")
-            console.log(data)
-            //this.props.changePage("profile-page", data)
+            this.props.changePage("friend-page", data)
         }).catch((err) => {
-            this.setState({errorMessage: 'Error! Wrong username or password.'})
             console.log(err.message)
         })
     }
@@ -39,6 +36,8 @@ export class ProfilePage extends Component {
     render() {
         console.log("This data is comming from my parent component:")
         console.log(this.props.data)
+        console.log("From ProfilePage")
+        console.log(this.props.data.friends)
 
         return (
             <div>
