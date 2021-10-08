@@ -43,7 +43,8 @@ router.get('/', function(req, res, next) {
                             res.status(404).send("Friend not found!");
                             database.close();
                         }else{
-                            res.status(200).send(res1[0].posts);
+                            const friendProfile = {firstname: res1[0].firstname, lastname: res1[0].lastname, username: friendUsername,posts: res1[0].posts}
+                            res.status(200).send(friendProfile);
                             database.close();      
                         }  
                     });
