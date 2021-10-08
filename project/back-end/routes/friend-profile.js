@@ -6,7 +6,7 @@ const url = "mongodb://localhost:27017/";
 
 
 /*Displaying friends post. */
-router.get('/', function(req, res, next) {
+router.post('/', function(req, res, next) {
     const {myUsername, loggedInID, friendUsername} = req.body;
     if(typeof(friendUsername) != "string" || typeof(loggedInID) != "number" || typeof(friendUsername) != "string" )
     { 

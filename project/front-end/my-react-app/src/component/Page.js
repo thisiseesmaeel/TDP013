@@ -38,7 +38,7 @@ export class Page extends Component {
             case "find-user-page":
                 return <FindUserPage changePage = {this.changePage} />
             case "friend-page":
-                return <FriendPage changePage = {this.changePage} />
+                return <FriendPage changePage = {this.changePage} data = { this.state.data }/>
             default:
                 return <h1>Undefined page!</h1>
         }

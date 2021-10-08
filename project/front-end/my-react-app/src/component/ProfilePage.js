@@ -10,20 +10,26 @@ export class ProfilePage extends Component {
     }
 
     showFriend = (username) => {
-        fetch("http://localhost:3000/login", {
+        const object = {
+            myUsername: this.props.data.username,
+            loggedInID: this.props.data.loggedInID,
+            friendUsername: username
+        }
+        fetch("http://localhost:3000/friendprofile", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
               },
-            body: JSON.stringify(this.state)
+            body: JSON.stringify(object)
         }).then((res) => 
         {   
             if(!res.ok) {throw new Error(res.status)}
             return res.json()
         })
         .then((data) => {
-            //console.log(data)
-            this.props.changePage("profile-page", data)
+            console.log("This is your friend profile: ")
+            console.log(data)
+            //this.props.changePage("profile-page", data)
         }).catch((err) => {
             this.setState({errorMessage: 'Error! Wrong username or password.'})
             console.log(err.message)
@@ -52,7 +58,7 @@ export class ProfilePage extends Component {
               
                     <div className="test w-25 mr-2 ml-2 p-2">
                         <h5>Friends list</h5>
-                          <FriendList friendList = { this.props.data.friends } />
+                          <FriendList friendList = { this.props.data.friends } showFriend = { this.showFriend }/>
                 
                     </div>
                     <div className="test w-50 mr-2 p-2" style={{ minHeight: "600px" }}>
