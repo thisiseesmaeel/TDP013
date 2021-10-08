@@ -4,6 +4,32 @@ import PostList from './PostList'
 import FriendRequestList from './FriendRequestList'
 
 export class ProfilePage extends Component {
+    constructor(props){
+        super(props)
+        this.showFriend = this.showFriend.bind(this)
+    }
+
+    showFriend = (username) => {
+        fetch("http://localhost:3000/login", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+              },
+            body: JSON.stringify(this.state)
+        }).then((res) => 
+        {   
+            if(!res.ok) {throw new Error(res.status)}
+            return res.json()
+        })
+        .then((data) => {
+            //console.log(data)
+            this.props.changePage("profile-page", data)
+        }).catch((err) => {
+            this.setState({errorMessage: 'Error! Wrong username or password.'})
+            console.log(err.message)
+        })
+    }
+
     render() {
         console.log("This data is comming from my parent component:")
         console.log(this.props.data)
@@ -37,14 +63,6 @@ export class ProfilePage extends Component {
                     <div className="test w-25 mr-2 p-2">
                         <h5>Friend Requests</h5>
                         <FriendRequestList friendRequestList = { this.props.data.receivedRequests } />
-                        {/* <div className="test mt-4 p-3">
-                        <h6>User1</h6>
-                        <div className="d-flex">
-                            <button className="w-50 btn btn-success mr-2 btn-sm">Accept</button>
-                            <button className="w-50 btn btn-danger mr-2 btn-sm">Ignore</button>
-                        </div>
-                            
-                        </div> */}
                     </div>
                 </div>  
             </div>

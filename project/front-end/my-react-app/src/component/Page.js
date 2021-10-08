@@ -14,7 +14,7 @@ export class Page extends Component {
         super(props)
         this.state = {
             page: "start-page",
-            data: {}
+            data: {},
         }
         this.changePage = this.changePage.bind(this)
     }
@@ -24,6 +24,7 @@ export class Page extends Component {
         console.log(data)
         this.setState({ page : param, data : data})
     }
+
     render() {
         switch(this.state.page){
             case "start-page":

@@ -8,7 +8,6 @@ const url = "mongodb://localhost:27017/";
 /*Displaying friends post. */
 router.get('/', function(req, res, next) {
     const {myUsername, loggedInID, friendUsername} = req.body;
-    console.log(typeof(loggedInID));
     if(typeof(friendUsername) != "string" || typeof(loggedInID) != "number" || typeof(friendUsername) != "string" )
     { 
         res.status(400).send("Wrong parameter!");
@@ -19,15 +18,25 @@ router.get('/', function(req, res, next) {
             let dbo = database.db("database");
             dbo.collection("users").find({"username": myUsername}).toArray((error, result) => {
                 if(error){ throw error; }
+                let isMyFriend = false; 
+                for (var i = 0; i < result[0].friends.length ; i++) {
+                    if(result[0].friends[i].username === friendUsername)
+                    {
+                        isMyFriend = true;
+                        break;
+                    }
+                    
+                }
                 if(result.length <= 0){
                     res.status(404).send("User not found!");
                     database.close();
-                }  
-                else if(!result[0].friends.includes(friendUsername))
+                }
+                else if(!isMyFriend)
                 {
                     res.status(404).send("Friend not found!");
                     database.close();
                 }else if(result[0].loggedInID == loggedInID && result[0].loggedInID != null){
+                    
                     dbo.collection("users").find({"username": friendUsername}).toArray((error, res1) => {
                         if(error){ throw error; }
                         if(res1.length <= 0){
