@@ -22,8 +22,9 @@ router.post('/', function(req, res, next) {
                 res.status(401).send("Wrong username or password!");
             }else{
                 dbo.collection("users").find({"username": username}).toArray((error, res1)=> {
+                const posts = res1[0].posts.sort((a,b) => (a.time < b.time) ? 1 : ((b.time < a.time) ? -1 : 0))
                 let userProfile = {"firstname": res1[0].firstname, "lastname": res1[0].lastname, "username": res1[0].username ,"email": res1[0].email
-                , "friends": res1[0].friends, "posts": res1[0].posts, "sendRequests": res1[0].sendRequests,
+                , "friends": res1[0].friends, "posts": posts, "sendRequests": res1[0].sendRequests,
                 "receivedRequests": res1[0].receivedRequests, "loggedInID": loggedInID["loggedInID"]};
                 res.status(200).send(userProfile);
                 database.close();

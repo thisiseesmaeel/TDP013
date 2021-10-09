@@ -7,7 +7,6 @@ export class ProfilePage extends Component {
     constructor(props){
         super(props)
         this.showFriend = this.showFriend.bind(this)
-        this.post = this.post.bind(this)
     }
 
     showFriend = (params) => {
@@ -34,42 +33,6 @@ export class ProfilePage extends Component {
         })
     }
 
-    post = () =>
-    {
-        console.log("I am trying to post something ...")
-        // const object = {
-        //     myUsername: this.props.data.username,
-        //     loggedInID: this.props.data.loggedInID,
-        //     destUsername: this.props.data.username,
-        //     post: {
-        //         owner: this.props.data.username,
-        //         body: "Testing if it is working",
-        //         time: new Date()
-        //     }
-        // }
-
-        // fetch("http://localhost:3000/writepost", {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //       },
-        //     body: JSON.stringify(object)
-        // }).then((res) => 
-        // {   
-        //     if(!res.ok) {throw new Error(res.status)}
-        //     return res.json()
-        // })
-        // .then((data) => {
-        //     ///this.props.changePage("friend-page", data)
-
-        // }).catch((err) => {
-        //     console.log(err.message)
-        // })
-
-
-
-    }
-
     render() {
         console.log("This data is comming from my parent component:")
         console.log(this.props.data)
@@ -86,10 +49,7 @@ export class ProfilePage extends Component {
                     <button className="w-25 btn btn-primary" onClick = {() => this.props.changePage("find-user-page", this.props.data)} >Find friend</button>
                 </div>
 
-                <div className ="test p-4 text-center">
-                    <input type="text" className="w-75" style={{height: "35px"}} id="userName" placeholder="Post something..."/>
-                    <button className="btn btn-primary" onClick = { this.post }>Post</button>
-                </div>
+                
 
                 <div className="d-flex">
               

@@ -22,7 +22,7 @@ router.post('/', function(req, res, next) {
                     res.status(404).send("User not found!");
                     database.close();
                 }else if(result[0].loggedInID == loggedInID && result[0].loggedInID != null){
-                    res.status(200).send(result[0].posts);
+                    res.status(200).send(result[0].posts.sort((a,b) => (a.time < b.time) ? 1 : ((b.time < a.time) ? -1 : 0)));
                     database.close();
                 }else{
                     res.status(401).send("Unauthorized!");
