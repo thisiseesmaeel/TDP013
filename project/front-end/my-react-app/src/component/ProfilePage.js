@@ -62,9 +62,9 @@ export class ProfilePage extends Component {
 
         return (
             <div>
-                <div className="test p-3">
-                    <div className="d-flex justify-content-between">
-                        <h1 className = "text-primary">Welcome { this.props.data.firstname }</h1>
+                <div className="test p-3 topheader">
+                    <div className="d-flex justify-content-between ">
+                        <h1 >Welcome { this.props.data.firstname }</h1>
                         <button className="btn btn-danger mr-2 btn-sm" onClick = { this.logout }> Logout </button>
                     </div>
                 </div>

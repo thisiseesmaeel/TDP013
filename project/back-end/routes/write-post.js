@@ -22,7 +22,7 @@ router.post('/', function(req, res, next) {
                 res.status(404).send("Not found!");
                 database.close();    
             }else if(result[0].loggedInID == parseInt(loggedInID) && result[0].loggedInID != null){
-                const post = {"body": message, "owner": myUsername, "time": new Date()}
+                const post = {"body": message, "ownerFirstname": result[0].firstname, "ownerLastname": result[0].lastname, "ownerUsername": myUsername, "time": new Date()}
                 dbo.collection("users").updateOne({"username": destUsername}, { $push: {"posts": post}}
                   ,(error, result) => {
                     if(error){ throw error; }

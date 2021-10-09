@@ -66,7 +66,7 @@ export class PostList extends Component {
         })
         .then(async (data) => {
             let updatedPostList = await this.updatePostList()
-            this.setState({postList: updatedPostList})
+            this.setState({postList: updatedPostList, message: ""})
         }).catch((err) => {
             console.log(err.message)
         })
@@ -85,7 +85,8 @@ export class PostList extends Component {
 
     render() {
         let element = this.state.postList.map((post) => (
-             <Post key = { post.time } body = { post.body } owner = { post.owner } time = { post.time }/> 
+             <Post key = { post.time } body = { post.body } ownerFirstname = { post.ownerFirstname }
+             ownerLastname = { post.ownerLastname } ownerUsername = { post.ownerUsername } time = { post.time }/> 
             )) 
     return (
         <div>

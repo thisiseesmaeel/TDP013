@@ -15,7 +15,7 @@ export class LoginPage extends Component {
         this.handleChangePassword = this.handleChangePassword.bind(this);
         this.login = this.login.bind(this);
     }
-    
+
     componentDidMount(){
         console.log("Login page is loaded!")
     }
@@ -52,24 +52,23 @@ export class LoginPage extends Component {
     }
     render() {
         return (
-            <div>
-                <div className="border border-danger p-4">
+            <>
+            <h1 className="text-center text-primary mt-5">Facebook 2.0</h1>
+            <div className= "d-flex flex-column w-50 mx-auto mt-4">
                 
-                <div className="form-group w-25">
-                <label htmlFor="userName">Username: </label>
-                <input type="text" value = { this.state.username } onChange={ this.handleChangeUsername } className="form-control" id="userName" placeholder="Enter your username"/>
-                </div>
+                <div className="p-4">
+                    <div className="form-group w-50 mx-auto mb-4">
+                        <input type="text" value = { this.state.username } onChange={ this.handleChangeUsername } className="form-control" id="userName" placeholder="Username"/>
+                    </div>
 
-                <div className="form-group w-25">
-                    <label htmlFor="password">Password: </label>
-                    <input type="text" value = { this.state.password } onChange={ this.handleChangePassword }  className="form-control" id="password" placeholder="Enter your password"/>
-                </div>
-                <div style = {{ color: "red" }}> { this.state.errorMessage } </div>
-                <div className="text-center p-3"><button onClick = { this.login } className="w-50 btn btn-primary">Log In</button></div>
-                
-                
+                    <div className="form-group w-50 mx-auto mb-4">
+                        <input type="text" value = { this.state.password } onChange={ this.handleChangePassword }  className="form-control" id="password" placeholder="Password"/>
+                    </div>
+                    <div className = "text-center" style = {{ color: "red" }}> { this.state.errorMessage } </div>
+                    <div className="text-center p-3"><button onClick = { this.login } className="w-25 btn btn-primary">Log In</button></div>
                 </div>
             </div>
+            </>
         )
     }
 }
