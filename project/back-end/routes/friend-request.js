@@ -5,7 +5,7 @@ const { MongoClient } = require('mongodb');
 const url = "mongodb://localhost:27017/";
 
 /* GET friend requests. */
-router.get('/', function(req, res, next) {
+router.post('/', function(req, res, next) {
     const { myUsername, loggedInID } = req.body;
     if(typeof(myUsername) != "string" || typeof(loggedInID) != "number")
     { 

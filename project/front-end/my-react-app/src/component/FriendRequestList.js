@@ -2,9 +2,41 @@ import React, { Component } from 'react'
 import FriendRequest from './FriendRequest'
 
 export class FriendRequestList extends Component {
+    constructor(props){
+        super(props)
+        this.state = {
+            friendRequestList: this.props.friendRequestList
+        }
+    }
+    componentDidMount(){
+        setInterval(() => {
+            const object = {
+                myUsername: this.props.myUsername,
+                loggedInID: this.props.loggedInID
+            }
+            fetch("http://localhost:3000/friendrequest", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                    },
+                body: JSON.stringify(object)
+            }).then((res) => 
+            {   
+                if(!res.ok) {throw new Error(res.status)}
+                return res.json()
+            })
+            .then((updatedFriendRequests) => {
+                console.log("Updating frine request list!")
+                this.setState({friendRequestList: updatedFriendRequests})
+            }).catch((err) => {
+                console.log(err.message)
+            })
+    }, 25000)
+    }
     render() {
-    return this.props.friendRequestList.map((friendrequest) => (
-            <FriendRequest key = { friendrequest.username } firstname = { friendrequest.firstname } lastname = { friendrequest.lastname } username = { friendrequest.username } />
+    return this.state.friendRequestList.map((friendRequest) => (
+            <FriendRequest key = { friendRequest.username } firstname = { friendRequest.firstname } 
+            lastname = { friendRequest.lastname } username = { friendRequest.username } />
     ))
     }
 }

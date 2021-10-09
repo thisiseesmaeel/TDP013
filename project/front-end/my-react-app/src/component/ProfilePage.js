@@ -107,7 +107,8 @@ export class ProfilePage extends Component {
                     
                     <div className="test w-25 mr-2 p-2">
                         <h5>Friend Requests</h5>
-                        <FriendRequestList friendRequestList = { this.props.data.receivedRequests } />
+                        <FriendRequestList friendRequestList = { this.props.data.receivedRequests } myUsername = { this.props.data.username }
+                          loggedInID = { this.props.data.loggedInID }  />
                     </div>
                 </div>  
             </div>
