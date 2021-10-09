@@ -18,11 +18,12 @@ let findUserRouter = require('./routes/find-user');
 let writePostRouter = require('./routes/write-post');
 let friendProfileRouter = require('./routes/friend-profile');
 let logOutRouter = require('./routes/logout');
-let friendRequestRouter = require('./routes/friend-request');
+let friendRequestRouter = require('./routes/friend-requests');
 let sendRequestRouter = require('./routes/send-request');
 let showFriendRouter = require('./routes/show-friends');
 let acceptRequestRouter = require('./routes/accept-request');
 let ignoreRequestRouter = require('./routes/ignore-request');
+let showPostsRouter = require('./routes/show-posts')
 
 var app = express();
 
@@ -46,11 +47,12 @@ app.use('/finduser', findUserRouter);
 app.use('/writepost', writePostRouter);
 app.use('/friendprofile', friendProfileRouter);
 app.use('/logout', logOutRouter);
-app.use('/friendrequest', friendRequestRouter);
+app.use('/friendrequests', friendRequestRouter);
 app.use('/sendrequest', sendRequestRouter);
 app.use('/showfriends', showFriendRouter);
 app.use('/acceptrequest', acceptRequestRouter);
 app.use('/ignorerequest', ignoreRequestRouter);
+app.use('/showposts', showPostsRouter);
 
 
 // catch 404 and forward to error handler

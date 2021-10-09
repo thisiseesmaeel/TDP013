@@ -102,7 +102,8 @@ export class ProfilePage extends Component {
                     </div>
                     <div className="test w-50 mr-2 p-2" style={{ minHeight: "600px" }}>
                         <h5>Timeline </h5>
-                        <PostList postList = { this.props.data.posts } /> 
+                        <PostList postList = { this.props.data.posts } myUsername = { this.props.data.username }
+                          loggedInID = { this.props.data.loggedInID } /> 
                     </div>
                     
                     <div className="test w-25 mr-2 p-2">

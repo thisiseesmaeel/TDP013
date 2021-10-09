@@ -14,7 +14,7 @@ export class FriendRequestList extends Component {
                 myUsername: this.props.myUsername,
                 loggedInID: this.props.loggedInID
             }
-            fetch("http://localhost:3000/friendrequest", {
+            fetch("http://localhost:3000/friendrequests", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -26,12 +26,12 @@ export class FriendRequestList extends Component {
                 return res.json()
             })
             .then((updatedFriendRequests) => {
-                console.log("Updating frine request list!")
+                console.log("Updating friend request list!")
                 this.setState({friendRequestList: updatedFriendRequests})
             }).catch((err) => {
                 console.log(err.message)
             })
-    }, 25000)
+    }, 35000)
     }
     render() {
     return this.state.friendRequestList.map((friendRequest) => (

@@ -31,7 +31,7 @@ export class FriendList extends Component {
             }).catch((err) => {
                 console.log(err.message)
             })
-        }, 20000)
+        }, 35000)
 
         
         
