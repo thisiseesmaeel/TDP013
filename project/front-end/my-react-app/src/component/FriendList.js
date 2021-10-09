@@ -5,11 +5,12 @@ export class FriendList extends Component {
     constructor(props){
         super(props)
         this.state = {
-            friends: this.props.friends
+            friends: this.props.friends,
+            myInterval: null
         }
     }
     componentDidMount(){
-        setInterval(()=> {
+        this.myInterval = setInterval(()=> {
             const object = {
                 myUsername: this.props.myUsername,
                 loggedInID: this.props.loggedInID
@@ -31,11 +32,14 @@ export class FriendList extends Component {
             }).catch((err) => {
                 console.log(err.message)
             })
-        }, 35000)
-
-        
-        
+        }, 35000)        
     }
+
+    componentWillUnmount()
+    {
+        clearInterval(this.myInterval)
+    }
+
     render() {
         return this.state.friends.map((friend) => (
             <Friend key = { friend.username } firstname = {friend.firstname} 

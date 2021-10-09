@@ -15,6 +15,7 @@ export class LoginPage extends Component {
         this.handleChangePassword = this.handleChangePassword.bind(this);
         this.login = this.login.bind(this);
     }
+    
     componentDidMount(){
         console.log("Login page is loaded!")
     }

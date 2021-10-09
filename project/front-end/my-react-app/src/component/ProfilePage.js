@@ -6,7 +6,30 @@ import FriendRequestList from './FriendRequestList'
 export class ProfilePage extends Component {
     constructor(props){
         super(props)
+        this.logout = this.logout.bind(this)
         this.showFriend = this.showFriend.bind(this)
+    }
+
+    logout = async () => {
+        console.log("Trying to logout...")
+        const object = {
+            myUsername: this.props.data.username,
+            loggedInID: this.props.data.loggedInID
+        }
+        await fetch("http://localhost:3000/logout", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+                },
+            body: JSON.stringify(object)
+        }).then((res) => 
+        {   
+            if(!res.ok) {throw new Error(res.status)}
+        }).catch((err) => {
+            console.log(err.message)
+        })
+
+        this.props.changePage("start-page")
     }
 
     showFriend = (params) => {
@@ -42,7 +65,7 @@ export class ProfilePage extends Component {
                 <div className="test p-3">
                     <div className="d-flex justify-content-between">
                         <h1 className = "text-primary">Welcome { this.props.data.firstname }</h1>
-                        <button className="btn btn-danger mr-2 btn-sm"> Logout </button>
+                        <button className="btn btn-danger mr-2 btn-sm" onClick = { this.logout }> Logout </button>
                     </div>
                 </div>
                 <div className="test text-center p-3">

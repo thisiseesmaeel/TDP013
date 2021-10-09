@@ -6,7 +6,8 @@ export class PostList extends Component {
         super(props)
         this.state = {
             postList: this.props.postList,
-            message: ""
+            message: "",
+            myInterval: null
         }
         this.handleChangePostMessage = this.handleChangePostMessage.bind(this)
         this.updatePostList = this.updatePostList.bind(this)
@@ -72,10 +73,14 @@ export class PostList extends Component {
     }
 
     componentDidMount(){
-        setInterval(async () => {
+        this.myInterval = setInterval(async () => {
         let updatedPostList = await this.updatePostList()
         this.setState({postList: updatedPostList})
     }, 35000)
+    }
+    componentWillUnmount()
+    {
+        clearInterval(this.myInterval)
     }
 
     render() {

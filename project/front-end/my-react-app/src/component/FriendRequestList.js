@@ -5,7 +5,8 @@ export class FriendRequestList extends Component {
     constructor(props){
         super(props)
         this.state = {
-            friendRequestList: this.props.friendRequestList
+            friendRequestList: this.props.friendRequestList,
+            myInterval: null
         }
         this.updateFriendRequestList= this.updateFriendRequestList.bind(this)
         this.acceptRequest = this.acceptRequest.bind(this)
@@ -63,10 +64,15 @@ export class FriendRequestList extends Component {
     }
 
     componentDidMount(){
-        setInterval(async () => {
+        this.myInterval = setInterval(async () => {
             let updatedFriendRequests = await this.updateFriendRequestList()
             this.setState({friendRequestList: updatedFriendRequests})
         }, 35000)
+    }
+
+    componentWillUnmount()
+    {
+        clearInterval(this.myInterval);
     }
     render() {
         return this.state.friendRequestList.map((friendRequest) => {
