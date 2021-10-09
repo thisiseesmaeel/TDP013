@@ -7,7 +7,9 @@ const url = "mongodb://localhost:27017/";
 /* Accept request. */
 router.post('/', function(req, res, next) {
     const { myUsername, loggedInID, otherFirstname, otherLastname, otherUsername } = req.body;
-    if(typeof(myUsername) != "string" || typeof(loggedInID) != "number", typeof(otherUsername) != "string" || myUsername == otherUsername)
+    if(typeof(myUsername) != "string" || typeof(loggedInID) != "number" 
+    || typeof(otherFirstname) != "string" || typeof(otherLastname) != "string" || typeof(otherUsername) != "string" 
+    || myUsername == otherUsername)
     { 
         res.status(400).send("Wrong parameter!");
     }else{

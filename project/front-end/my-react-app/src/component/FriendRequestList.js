@@ -7,37 +7,72 @@ export class FriendRequestList extends Component {
         this.state = {
             friendRequestList: this.props.friendRequestList
         }
+        this.updateFriendRequestList= this.updateFriendRequestList.bind(this)
+        this.acceptRequest = this.acceptRequest.bind(this)
     }
+    updateFriendRequestList = async () => {
+        let updatedFriendRequests = null
+        const object = {
+            myUsername: this.props.myUsername,
+            loggedInID: this.props.loggedInID
+        }
+        await fetch("http://localhost:3000/friendrequests", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+                },
+            body: JSON.stringify(object)
+        }).then((res) => 
+        {   
+            if(!res.ok) {throw new Error(res.status)}
+            return res.json()
+        })
+        .then((data) => {
+            console.log("Updating friend request list!")
+            updatedFriendRequests = data
+        }).catch((err) => {
+            console.log(err.message)
+        })
+        return updatedFriendRequests
+    }
+
+    acceptRequest = async (friendFirstname, friendLastname, friendUsername) => {
+        console.log(`Accepting friend request from ${friendFirstname} ${friendLastname} with username of ${friendUsername}`)
+        const object = {
+            myUsername: this.props.myUsername,
+            loggedInID: this.props.loggedInID,
+            otherFirstname: friendFirstname,
+            otherLastname: friendLastname,
+            otherUsername: friendUsername
+        }
+        await fetch("http://localhost:3000/acceptrequest", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+                },
+            body: JSON.stringify(object)
+        }).then((res) => 
+        {   
+            if(!res.ok) {throw new Error(res.status)}
+        }).catch((err) => {
+            console.log(err.message)
+        })
+
+        let updatedFriendRequests = await this.updateFriendRequestList()
+        this.setState({friendRequestList: updatedFriendRequests})     
+    }
+
     componentDidMount(){
-        setInterval(() => {
-            const object = {
-                myUsername: this.props.myUsername,
-                loggedInID: this.props.loggedInID
-            }
-            fetch("http://localhost:3000/friendrequests", {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                    },
-                body: JSON.stringify(object)
-            }).then((res) => 
-            {   
-                if(!res.ok) {throw new Error(res.status)}
-                return res.json()
-            })
-            .then((updatedFriendRequests) => {
-                console.log("Updating friend request list!")
-                this.setState({friendRequestList: updatedFriendRequests})
-            }).catch((err) => {
-                console.log(err.message)
-            })
-    }, 35000)
+        setInterval(async () => {
+            let updatedFriendRequests = await this.updateFriendRequestList()
+            this.setState({friendRequestList: updatedFriendRequests})
+        }, 35000)
     }
     render() {
-    return this.state.friendRequestList.map((friendRequest) => (
-            <FriendRequest key = { friendRequest.username } firstname = { friendRequest.firstname } 
-            lastname = { friendRequest.lastname } username = { friendRequest.username } />
-    ))
+        return this.state.friendRequestList.map((friendRequest) => {
+            return <FriendRequest key = { friendRequest.username } firstname = { friendRequest.firstname } 
+            lastname = { friendRequest.lastname } username = { friendRequest.username } acceptRequest = { this.acceptRequest } />
+        })
     }
 }
 
