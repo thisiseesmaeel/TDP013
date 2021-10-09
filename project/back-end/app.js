@@ -20,7 +20,7 @@ let friendProfileRouter = require('./routes/friend-profile');
 let logOutRouter = require('./routes/logout');
 let friendRequestRouter = require('./routes/friend-request');
 let sendRequestRouter = require('./routes/send-request');
-let showFriendRouter = require('./routes/show-friend');
+let showFriendRouter = require('./routes/show-friends');
 let acceptRequestRouter = require('./routes/accept-request');
 let ignoreRequestRouter = require('./routes/ignore-request');
 
@@ -48,7 +48,7 @@ app.use('/friendprofile', friendProfileRouter);
 app.use('/logout', logOutRouter);
 app.use('/friendrequest', friendRequestRouter);
 app.use('/sendrequest', sendRequestRouter);
-app.use('/showfriend', showFriendRouter);
+app.use('/showfriends', showFriendRouter);
 app.use('/acceptrequest', acceptRequestRouter);
 app.use('/ignorerequest', ignoreRequestRouter);
 

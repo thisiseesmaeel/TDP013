@@ -2,10 +2,11 @@ var express = require('express');
 const { use } = require('.');
 var router = express.Router();
 const { MongoClient } = require('mongodb');
+const { restart } = require('nodemon');
 const url = "mongodb://localhost:27017/";
 
 /* show friend list. */
-router.get('/', function(req, res, next) {
+router.post('/', function(req, res, next) {
     const { myUsername, loggedInID} = req.body;
     if(typeof(myUsername) != "string" || typeof(loggedInID) != "number")
     { 

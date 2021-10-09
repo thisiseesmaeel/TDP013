@@ -8,7 +8,6 @@ const url = "mongodb://localhost:27017/";
 /* Login to the profile. */
 router.post('/', function(req, res, next) {
     const {username, password} = req.body;
-    console.log(password)
     if(typeof(username) != "string" || typeof(password) != "string")
     { 
         res.status(400).send("Wrong parameter!");
