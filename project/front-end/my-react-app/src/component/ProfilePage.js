@@ -63,9 +63,9 @@ export class ProfilePage extends Component {
 
         return (
             <div>
-                <div className="p-3 topheader">
+                <div className="primary-box p-3 topheader">
                     <div className="d-flex justify-content-between ">
-                        <h1 >Welcome { this.props.data.firstname }</h1>
+                        <h1>Welcome { this.props.data.firstname }</h1>
                         <button className="btn btn-danger mr-2 btn-sm" onClick = { this.logout }> Logout </button>
                     </div>
                 </div>
@@ -76,20 +76,20 @@ export class ProfilePage extends Component {
                 <div className="d-flex">
               
                     <div className="primary-box w-25 mr-2 ml-2 p-2">
-                        <h5>Friends list</h5>
-                          <FriendList friends = { this.props.data.friends } myUsername = { this.props.data.username }
-                          loggedInID = { this.props.data.loggedInID } 
-                          showFriend = { this.showFriend }/>
-                
+                        <h4>Friends list</h4>
+                        <FriendList friends = { this.props.data.friends } myUsername = { this.props.data.username }
+                        loggedInID = { this.props.data.loggedInID } 
+                        showFriend = { this.showFriend }/>
+            
                     </div>
                     <div className="primary-box w-50 mr-2 p-2" style={{ minHeight: "600px" }}>
-                        <h5>Timeline </h5>
+                        <h4>Timeline </h4>
                         <PostList postList = { this.props.data.posts } myUsername = { this.props.data.username }
                           loggedInID = { this.props.data.loggedInID } destUsername = { this.props.data.username }/> 
                     </div>
                     
                     <div className="primary-box w-25 mr-2 p-2">
-                        <h5>Friend Requests</h5>
+                        <h4>Friend Requests</h4>
                         <FriendRequestList friendRequestList = { this.props.data.receivedRequests } myUsername = { this.props.data.username }
                           loggedInID = { this.props.data.loggedInID }  />
                     </div>

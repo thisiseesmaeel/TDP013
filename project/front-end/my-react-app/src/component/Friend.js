@@ -14,7 +14,7 @@ export class Friend extends Component {
         return (
             <>
             <div className="primary-box animation text-center p-1 mb-3">
-            <h6> {this.props.firstname} {this.props.lastname}  </h6>
+            <h5> {this.props.firstname} {this.props.lastname}  </h5>
             <button className="w-50 btn btn-primary mr-2 btn-sm" 
             onClick = { this.showFriend }>Show profile</button>
             </div> 
