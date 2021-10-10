@@ -73,8 +73,6 @@ export class ProfilePage extends Component {
                     <button className="w-25 btn btn-primary" onClick = {() => this.props.changePage("find-user-page", this.props.data)} >Find friend</button>
                 </div>
 
-                
-
                 <div className="d-flex">
               
                     <div className="test w-25 mr-2 ml-2 p-2">

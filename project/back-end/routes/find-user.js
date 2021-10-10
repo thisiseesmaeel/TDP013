@@ -4,7 +4,7 @@ var router = express.Router();
 const { MongoClient } = require('mongodb');
 const url = "mongodb://localhost:27017/";
 
-router.get('/', function(req, res, next) {
+router.post('/', function(req, res, next) {
     const {myUsername, loggedInID, user} = req.body;
     const userArr = user.split(" ");
     firstname = userArr[0];
@@ -21,20 +21,27 @@ router.get('/', function(req, res, next) {
                 if(result.length > 1){ res.status(500).send("Internal Server Error");}
                 if(result[0].loggedInID == loggedInID && result[0].loggedInID != null){
                     let myFriends = result[0].friends;
-                    dbo.collection("users").find({"firstname": firstname, "lastname": lastname}).toArray((error, searchResult) => {
+                    dbo.collection("users").find({"firstname": new RegExp(firstname, 'i'), "lastname": new RegExp(lastname, 'i')}).toArray((error, searchResult) => {
                         if(error){ throw error; }
                         if(searchResult.length == 0){
-                            res.status(204).send("No Content!");
+                            res.status(404).send("Not found!");
                         }else{
                             let foundUsers = [];
-                            searchResult.forEach((value) => {
-                            if(!myFriends.includes(value.username) && value.username != myUsername){
-                                let tempUser = {"firstname": value.firstname ,"lastname": value.lastname, "username": value.username};
-                                foundUsers.push(tempUser);
-                            }
+                            searchResult.forEach((profile) => {
+                                let isMyFriend = false; 
+                                for (var i = 0; i < myFriends.length ; i++) {
+                                        if(myFriends[i].username === profile.username)
+                                        {
+                                            isMyFriend = true;
+                                            break;
+                                        }
+                                    }
+                                let temp = { "firstname": profile.firstname, "lastname": profile.lastname, "username": profile.username }
+                                if(!isMyFriend) { foundUsers.push(temp) }
+
                             });
                             if(foundUsers.length <= 0){
-                                res.status(204).send("No Content!");
+                                res.status(404).send("Not found!");
                                 database.close();
                             }
                             else{
@@ -57,3 +64,13 @@ router.get('/', function(req, res, next) {
 });
 
 module.exports = router;
+
+
+// let isMyFriend = false; 
+// for (var i = 0; i < result[0].friends.length ; i++) {
+//         if(result[0].friends[i].username === destUsername)
+//         {
+//             isMyFriend = true;
+//             break;
+//         }
+// }

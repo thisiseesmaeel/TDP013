@@ -42,7 +42,7 @@ export class Page extends Component {
             case "profile-page":
                 return <ProfilePage changePage = { this.changePage } setMyCred = { this.setMyCred } data = { this.state.data }/>
             case "find-user-page":
-                return <FindUserPage changePage = {this.changePage} />
+                return <FindUserPage changePage = {this.changePage} data = { this.state.data } />
             case "friend-page":
                 return <FriendPage changePage = {this.changePage} data = { this.state.data }
                 myUsername = { this.state.myUsername } loggedInID = { this.state.loggedInID }/>
