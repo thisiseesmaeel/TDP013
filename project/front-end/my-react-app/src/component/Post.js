@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 export class Post extends Component {
     render() {
         return (
-            <div className="test p-2 mt-3" style= {{ height: "150px"}}>
+            <div className="primary-box animation p-2 mt-3" style= {{ height: "150px"}}>
                 <h5>{ this.props.ownerFirstname } { this.props.ownerLastname } ( { this.props.ownerUsername } ) </h5>
                 <h6>{ this.props.time }</h6>
                 <p>{ this.props.body }</p>

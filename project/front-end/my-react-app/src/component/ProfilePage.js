@@ -63,32 +63,32 @@ export class ProfilePage extends Component {
 
         return (
             <div>
-                <div className="test p-3 topheader">
+                <div className="p-3 topheader">
                     <div className="d-flex justify-content-between ">
                         <h1 >Welcome { this.props.data.firstname }</h1>
                         <button className="btn btn-danger mr-2 btn-sm" onClick = { this.logout }> Logout </button>
                     </div>
                 </div>
-                <div className="test text-center p-3">
+                <div className="text-center p-3">
                     <button className="w-25 btn btn-primary" onClick = {() => this.props.changePage("find-user-page", this.props.data)} >Find friend</button>
                 </div>
 
                 <div className="d-flex">
               
-                    <div className="test w-25 mr-2 ml-2 p-2">
+                    <div className="primary-box w-25 mr-2 ml-2 p-2">
                         <h5>Friends list</h5>
                           <FriendList friends = { this.props.data.friends } myUsername = { this.props.data.username }
                           loggedInID = { this.props.data.loggedInID } 
                           showFriend = { this.showFriend }/>
                 
                     </div>
-                    <div className="test w-50 mr-2 p-2" style={{ minHeight: "600px" }}>
+                    <div className="primary-box w-50 mr-2 p-2" style={{ minHeight: "600px" }}>
                         <h5>Timeline </h5>
                         <PostList postList = { this.props.data.posts } myUsername = { this.props.data.username }
                           loggedInID = { this.props.data.loggedInID } destUsername = { this.props.data.username }/> 
                     </div>
                     
-                    <div className="test w-25 mr-2 p-2">
+                    <div className="primary-box w-25 mr-2 p-2">
                         <h5>Friend Requests</h5>
                         <FriendRequestList friendRequestList = { this.props.data.receivedRequests } myUsername = { this.props.data.username }
                           loggedInID = { this.props.data.loggedInID }  />

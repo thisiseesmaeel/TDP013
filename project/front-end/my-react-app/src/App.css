@@ -1,6 +1,19 @@
-.test{
+/* The animation code */
+@keyframes slideInFromLeft {
+  0% {
+    transform: translateY(70%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.primary-box{
   border: 2px lightgray solid;
   border-radius: 6px;
+}
+.animation{
+  animation: 0.5s ease-out 0s 1 slideInFromLeft;
 }
 .topheader{
   background-color: #0d6efd;

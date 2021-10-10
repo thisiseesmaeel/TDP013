@@ -34,7 +34,7 @@ export class FriendPage extends Component {
     render() {
         return (
         <div>
-            <div className = "test p-3 topheader d-flex justify-content-between">
+            <div className = "primary-box p-3 topheader d-flex justify-content-between">
                 <h1>{ this.props.data.firstname } { this.props.data.lastname }'s page</h1>
                 <button className="btn btn-primary btn-sm" style = {{ borderColor: "white" }} onClick = { this.showProfile }> My profile </button>
             </div>

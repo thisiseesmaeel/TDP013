@@ -58,7 +58,7 @@ export class FindUserPage extends Component {
     render() {
         return (
             <div>
-                <div className="test p-3 topheader">
+                <div className="primary-box p-3 topheader">
                     <div className="d-flex justify-content-between ">
                         <h1 >Welcome { this.props.data.firstname }</h1>
                         <div className = "d-flex justify-content-around" style ={{ width: "200px"}}>

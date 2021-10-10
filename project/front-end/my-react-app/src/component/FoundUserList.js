@@ -47,7 +47,7 @@ export class FoundUserList extends Component {
            ))
         return (
             <div>
-                <div className ="test p-4 text-center">
+                <div className ="primary-box p-4 text-center">
                     <input type="text" className="w-75" value = { this.state.query } onChange = { this.handleQueryChange }
                      style={{height: "35px"}} id="userName" placeholder="Search for someone..."/>
                     <button className="btn btn-primary" onClick = { this.find } >Search</button>
