@@ -7,7 +7,9 @@ const url = "mongodb://localhost:27017/";
 /* send friend request. */
 router.post('/', function(req, res, next) {
     const { myUsername, loggedInID, otherFirstname, otherLastname, otherUsername } = req.body;
-    if(typeof(myUsername) != "string" || typeof(loggedInID) != "number", typeof(otherUsername) != "string" || myUsername == otherUsername)
+    if(typeof(myUsername) != "string" || typeof(loggedInID) != "number" 
+    || typeof(otherFirstname) != "string" || typeof(otherLastname) != "string" || typeof(otherUsername) != "string"
+    || myUsername == otherUsername)
     { 
         res.status(400).send("Wrong parameter!");
     }else{
@@ -20,7 +22,7 @@ router.post('/', function(req, res, next) {
                 friendsObject = result[0].friends;
                 let alreadyFriend = false;
                 for(const friend of friendsObject){
-                    if(friend.firstname == otherFirstname)
+                    if(friend.username == otherUsername)
                     {
                         alreadyFriend = true;
                         break;

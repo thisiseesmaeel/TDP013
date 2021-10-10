@@ -43,7 +43,7 @@ export class FoundUserList extends Component {
     render() {
         const element = this.state.foundUsers.map((foundUser) => (
             <FoundUser key = { foundUser.username } firstname = { foundUser.firstname } lastname = { foundUser.lastname }
-            username = { foundUser.username } /> 
+            username = { foundUser.username } myUsername = { this.props.data.username } loggedInID = { this.props.data.loggedInID }/> 
            ))
         return (
             <div>
