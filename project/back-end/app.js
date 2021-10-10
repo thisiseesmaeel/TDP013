@@ -6,24 +6,21 @@ var logger = require('morgan');
 var cors = require('cors');
 
 
-
-
-
 var indexRouter = require('./routes/index');
 
-
-let loginRouter = require('./routes/login');
-let signUpRouter = require('./routes/sign-up');
-let findUserRouter = require('./routes/find-user');
-let writePostRouter = require('./routes/write-post');
-let friendProfileRouter = require('./routes/friend-profile');
-let logOutRouter = require('./routes/logout');
-let friendRequestRouter = require('./routes/friend-requests');
-let sendRequestRouter = require('./routes/send-request');
-let showFriendRouter = require('./routes/show-friends');
-let acceptRequestRouter = require('./routes/accept-request');
-let ignoreRequestRouter = require('./routes/ignore-request');
-let showPostsRouter = require('./routes/show-posts')
+const loginRouter = require('./routes/login');
+const signUpRouter = require('./routes/sign-up');
+const findUserRouter = require('./routes/find-user');
+const writePostRouter = require('./routes/write-post');
+const friendProfileRouter = require('./routes/friend-profile');
+const logOutRouter = require('./routes/logout');
+const friendRequestRouter = require('./routes/friend-requests');
+const sendRequestRouter = require('./routes/send-request');
+const showFriendRouter = require('./routes/show-friends');
+const acceptRequestRouter = require('./routes/accept-request');
+const ignoreRequestRouter = require('./routes/ignore-request');
+const showPostsRouter = require('./routes/show-posts')
+const myProfileRouter = require('./routes/my-profile')
 
 var app = express();
 
@@ -53,6 +50,7 @@ app.use('/showfriends', showFriendRouter);
 app.use('/acceptrequest', acceptRequestRouter);
 app.use('/ignorerequest', ignoreRequestRouter);
 app.use('/showposts', showPostsRouter);
+app.use('/myprofile', myProfileRouter);
 
 
 // catch 404 and forward to error handler

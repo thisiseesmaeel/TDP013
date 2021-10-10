@@ -32,7 +32,27 @@ export class FindUserPage extends Component {
     }
 
     showProfile = () => {
-        this.props.changePage("profile-page", this.props.data)
+        const object = {
+            myUsername: this.props.data.username,
+            loggedInID: this.props.data.loggedInID
+        }
+        fetch("http://localhost:3000/myprofile", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+                },
+            body: JSON.stringify(object)
+        }).then((res) => 
+        {   
+            if(!res.ok) {throw new Error(res.status)}
+            return res.json()
+        })
+        .then((data) => {
+            
+            this.props.changePage("profile-page", data)
+        }).catch((err) => {
+            console.log(err.message)
+        })
     }
 
     render() {

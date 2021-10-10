@@ -15,7 +15,6 @@ export class Page extends Component {
         this.state = {
             page: "start-page",
             data: {},
-            extraData: {},
             myUsername: null,
             loggedInID: null
         }
@@ -26,11 +25,10 @@ export class Page extends Component {
     setMyCred = (myUsername, loggedInID) => {
         this.setState({ myUsername, loggedInID})  
     }
-    changePage = (pageName, data = {}, extraData = {}) => {
+    changePage = (pageName, data = {}) => {
         console.log("Change page clicked!")
-        console.log(extraData)
         console.log(data)
-        this.setState({ page : pageName, data : data, extraData: extraData})
+        this.setState({ page : pageName, data : data})
     }
 
     render() {
@@ -46,7 +44,7 @@ export class Page extends Component {
             case "find-user-page":
                 return <FindUserPage changePage = {this.changePage} data = { this.state.data } />
             case "friend-page":
-                return <FriendPage changePage = {this.changePage} data = { this.state.data } extraData = { this.state.extraData}
+                return <FriendPage changePage = {this.changePage} data = { this.state.data }
                 myUsername = { this.state.myUsername } loggedInID = { this.state.loggedInID }/>
             default:
                 return <h1>Undefined page!</h1>

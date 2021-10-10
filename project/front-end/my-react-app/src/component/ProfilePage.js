@@ -51,7 +51,7 @@ export class ProfilePage extends Component {
         })
         .then((friendsInfo) => {
             this.props.setMyCred(this.props.data.username, this.props.data.loggedInID)
-            this.props.changePage("friend-page", friendsInfo, this.props.data)
+            this.props.changePage("friend-page", friendsInfo)
         }).catch((err) => {
             console.log(err.message)
         })
