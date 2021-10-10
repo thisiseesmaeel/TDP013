@@ -18,7 +18,15 @@ router.post('/', function(req, res, next) {
 
         dbo.collection("users").find({"username": myUsername}).toArray((error, result) => {
             if(error){ throw error; }
-            if(!result[0].friends.includes(destUsername) && result[0].username != destUsername){
+            let isMyFriend = false; 
+            for (var i = 0; i < result[0].friends.length ; i++) {
+                if(result[0].friends[i].username === destUsername)
+                {
+                    isMyFriend = true;
+                    break;
+                }
+             }
+            if(!isMyFriend && result[0].username != destUsername){
                 res.status(404).send("Not found!");
                 database.close();    
             }else if(result[0].loggedInID == parseInt(loggedInID) && result[0].loggedInID != null){

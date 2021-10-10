@@ -50,6 +50,7 @@ export class ProfilePage extends Component {
             return res.json()
         })
         .then((data) => {
+            this.props.setMyCred(this.props.data.username, this.props.data.loggedInID)
             this.props.changePage("friend-page", data)
         }).catch((err) => {
             console.log(err.message)
@@ -86,7 +87,7 @@ export class ProfilePage extends Component {
                     <div className="test w-50 mr-2 p-2" style={{ minHeight: "600px" }}>
                         <h5>Timeline </h5>
                         <PostList postList = { this.props.data.posts } myUsername = { this.props.data.username }
-                          loggedInID = { this.props.data.loggedInID } /> 
+                          loggedInID = { this.props.data.loggedInID } destUsername = { this.props.data.username }/> 
                     </div>
                     
                     <div className="test w-25 mr-2 p-2">

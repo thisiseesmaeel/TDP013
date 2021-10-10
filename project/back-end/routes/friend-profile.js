@@ -43,7 +43,8 @@ router.post('/', function(req, res, next) {
                             res.status(404).send("Friend not found!");
                             database.close();
                         }else{
-                            const friendProfile = {firstname: res1[0].firstname, lastname: res1[0].lastname, username: friendUsername,posts: res1[0].posts}
+                            const sortedPosts = res1[0].posts.sort((a,b) => (a.time < b.time) ? 1 : ((b.time < a.time) ? -1 : 0))
+                            const friendProfile = {firstname: res1[0].firstname, lastname: res1[0].lastname, username: friendUsername,posts: sortedPosts}
                             res.status(200).send(friendProfile);
                             database.close();      
                         }  

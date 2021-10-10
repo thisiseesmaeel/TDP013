@@ -9,6 +9,8 @@ export class PostList extends Component {
             message: "",
             myInterval: null
         }
+        console.log("From postlist!")
+        console.log(this.state.postList)
         this.handleChangePostMessage = this.handleChangePostMessage.bind(this)
         this.updatePostList = this.updatePostList.bind(this)
         this.post = this.post.bind(this)
@@ -24,6 +26,7 @@ export class PostList extends Component {
         const object = {
             myUsername: this.props.myUsername,
             loggedInID: this.props.loggedInID,
+            destUsername: this.props.destUsername
         }
         await fetch("http://localhost:3000/showposts", {
             method: 'POST',
@@ -46,10 +49,14 @@ export class PostList extends Component {
     post = () =>
     {
         console.log("I am trying to post something ...")
+        console.log(this.props.myUsername)
+        console.log(this.props.loggedInID)
+        console.log(this.props.destUsername)
+        console.log(this.state.message)
         const object = {
             myUsername: this.props.myUsername,
             loggedInID: this.props.loggedInID,
-            destUsername: this.props.myUsername,
+            destUsername: this.props.destUsername,
             message : this.state.message
             }
 

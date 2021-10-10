@@ -7,7 +7,7 @@ const url = "mongodb://localhost:27017/";
 
 /*Displaying friends post. */
 router.post('/', function(req, res, next) {
-    const { myUsername, loggedInID } = req.body;
+    const { myUsername, loggedInID, destUsername } = req.body;
     if(typeof(myUsername) != "string" || typeof(loggedInID) != "number" )
     { 
         res.status(400).send("Wrong parameter!");
@@ -22,8 +22,29 @@ router.post('/', function(req, res, next) {
                     res.status(404).send("User not found!");
                     database.close();
                 }else if(result[0].loggedInID == loggedInID && result[0].loggedInID != null){
-                    res.status(200).send(result[0].posts.sort((a,b) => (a.time < b.time) ? 1 : ((b.time < a.time) ? -1 : 0)));
-                    database.close();
+                    let isMyFriend = false;
+                    for (var i = 0; i < result[0].friends.length ; i++) {
+                        if(result[0].friends[i].username === destUsername)
+                        {
+                            isMyFriend = true;
+                            break;
+                        }
+                    }
+                    if(myUsername === destUsername){
+                        res.status(200).send(result[0].posts.sort((a,b) => (a.time < b.time) ? 1 : ((b.time < a.time) ? -1 : 0)));
+                        database.close();
+                    }else if(isMyFriend){
+                        dbo.collection("users").find({"username": destUsername}).toArray((error, res1) => {
+                            if(error){ throw error; }
+                            res.status(200).send(res1[0].posts.sort((a,b) => (a.time < b.time) ? 1 : ((b.time < a.time) ? -1 : 0)));
+                            database.close();
+                        });
+                    }
+                    else{
+                        res.status(401).send("You are not friend with this user!");
+                        database.close();
+                    }
+                    
                 }else{
                     res.status(401).send("Unauthorized!");
                     database.close();
