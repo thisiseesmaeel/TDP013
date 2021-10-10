@@ -49,9 +49,9 @@ export class ProfilePage extends Component {
             if(!res.ok) {throw new Error(res.status)}
             return res.json()
         })
-        .then((data) => {
+        .then((friendsInfo) => {
             this.props.setMyCred(this.props.data.username, this.props.data.loggedInID)
-            this.props.changePage("friend-page", data)
+            this.props.changePage("friend-page", friendsInfo, this.props.data)
         }).catch((err) => {
             console.log(err.message)
         })

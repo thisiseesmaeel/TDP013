@@ -2,12 +2,22 @@ import React, { Component } from 'react'
 import PostList from './PostList'
 
 export class FriendPage extends Component {
+    constructor(props){
+        super(props)
+
+        this.showProfile = this.showProfile.bind(this)
+    }
+
+    showProfile = () => {
+        this.props.changePage("profile-page", this.props.extraData)
+    }
+
     render() {
-        console.log(this.props.data.posts)
         return (
         <div>
-            <div className = "test p-3 topheader">
+            <div className = "test p-3 topheader d-flex justify-content-between">
                 <h1>{ this.props.data.firstname } { this.props.data.lastname }'s page</h1>
+                <button className="btn btn-primary btn-sm" style = {{ borderColor: "white" }} onClick = { this.showProfile }> My profile </button>
             </div>
             <div className = "row" >
                 

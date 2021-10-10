@@ -42,7 +42,6 @@ export class LoginPage extends Component {
             return res.json()
         })
         .then((data) => {
-            //console.log(data)
             this.props.changePage("profile-page", data)
         }).catch((err) => {
             this.setState({errorMessage: 'Error! Wrong username or password.'})
