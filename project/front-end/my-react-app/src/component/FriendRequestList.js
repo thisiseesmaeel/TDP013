@@ -12,6 +12,7 @@ export class FriendRequestList extends Component {
         this.acceptRequest = this.acceptRequest.bind(this)
     }
     updateFriendRequestList = async () => {
+        console.log("Checking if there is newer friend request list...")
         let updatedFriendRequests = null
         const object = {
             myUsername: this.props.myUsername,
@@ -29,7 +30,6 @@ export class FriendRequestList extends Component {
             return res.json()
         })
         .then((data) => {
-            console.log("Updating friend request list!")
             updatedFriendRequests = data
         }).catch((err) => {
             console.log(err.message)
@@ -66,7 +66,11 @@ export class FriendRequestList extends Component {
     componentDidMount(){
         this.myInterval = setInterval(async () => {
             let updatedFriendRequests = await this.updateFriendRequestList()
-            this.setState({friendRequestList: updatedFriendRequests})
+            if( JSON.stringify(updatedFriendRequests) !== JSON.stringify(this.state.friendRequestList) ) {
+                    console.log("New friend request list detected. Updating friend request list...")
+                    this.setState({friendRequestList: updatedFriendRequests})
+                }
+            else{ console.log("There is no new friend request.") }
         }, 35000)
     }
 

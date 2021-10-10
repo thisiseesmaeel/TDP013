@@ -19,6 +19,7 @@ export class PostList extends Component {
     }
 
     updatePostList = async () => {
+        console.log("Checking if there is a newer postlist...")
         let updatedPostList = null
         const object = {
             myUsername: this.props.myUsername,
@@ -36,7 +37,6 @@ export class PostList extends Component {
             return res.json()
         })
         .then((data) => {
-            console.log("Updating posts!")
             updatedPostList = data
         }).catch((err) => {
             console.log(err.message)
@@ -66,6 +66,7 @@ export class PostList extends Component {
         })
         .then(async (data) => {
             let updatedPostList = await this.updatePostList()
+            console.log("New postlist detected. Updating posts...")
             this.setState({postList: updatedPostList, message: ""})
         }).catch((err) => {
             console.log(err.message)
@@ -75,7 +76,15 @@ export class PostList extends Component {
     componentDidMount(){
         this.myInterval = setInterval(async () => {
         let updatedPostList = await this.updatePostList()
-        this.setState({postList: updatedPostList})
+        if(JSON.stringify(updatedPostList) !== JSON.stringify(this.state.postList) )
+        {
+            console.log("New postlist detected. Updating posts...")
+            this.setState({postList: updatedPostList})
+        }
+        else{
+            console.log("There is no new postlist.") 
+        }
+        
     }, 35000)
     }
     componentWillUnmount()

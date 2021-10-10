@@ -11,6 +11,7 @@ export class FriendList extends Component {
     }
     componentDidMount(){
         this.myInterval = setInterval(()=> {
+            console.log("Checking if there is new friendlist...")
             const object = {
                 myUsername: this.props.myUsername,
                 loggedInID: this.props.loggedInID
@@ -27,8 +28,11 @@ export class FriendList extends Component {
                 return res.json()
             })
             .then((updatedFriends) => {
-                console.log("Updating frined list!")
-                this.setState({friends: updatedFriends})
+                if(JSON.stringify(updatedFriends) !== JSON.stringify(this.state.friends)){
+                    console.log("New friendlist detected. Update friendlist...")
+                    this.setState({friends: updatedFriends})
+                }else{ console.log("There is no new friendlist.") }
+                
             }).catch((err) => {
                 console.log(err.message)
             })
