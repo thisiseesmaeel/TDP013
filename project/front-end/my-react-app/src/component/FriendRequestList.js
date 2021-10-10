@@ -10,7 +10,9 @@ export class FriendRequestList extends Component {
         }
         this.updateFriendRequestList= this.updateFriendRequestList.bind(this)
         this.acceptRequest = this.acceptRequest.bind(this)
+        this.ignoreRequest = this.ignoreRequest.bind(this)
     }
+
     updateFriendRequestList = async () => {
         console.log("Checking if there is newer friend request list...")
         let updatedFriendRequests = null
@@ -60,6 +62,34 @@ export class FriendRequestList extends Component {
         })
 
         let updatedFriendRequests = await this.updateFriendRequestList()
+        console.log("New friend request list detected. Updating friend request list...")
+        this.setState({friendRequestList: updatedFriendRequests})     
+    }
+
+    ignoreRequest = async (friendFirstname, friendLastname, friendUsername) => {
+        console.log(`Ignoring friend request from ${friendFirstname} ${friendLastname} with username of ${friendUsername}`)
+        const object = {
+            myUsername: this.props.myUsername,
+            loggedInID: this.props.loggedInID,
+            otherFirstname: friendFirstname,
+            otherLastname: friendLastname,
+            otherUsername: friendUsername
+        }
+        await fetch("http://localhost:3000/ignorerequest", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+                },
+            body: JSON.stringify(object)
+        }).then((res) => 
+        {   
+            if(!res.ok) {throw new Error(res.status)}
+        }).catch((err) => {
+            console.log(err.message)
+        })
+
+        let updatedFriendRequests = await this.updateFriendRequestList()
+        console.log("New friend request list detected. Updating friend request list...")
         this.setState({friendRequestList: updatedFriendRequests})     
     }
 
@@ -81,7 +111,8 @@ export class FriendRequestList extends Component {
     render() {
         return this.state.friendRequestList.map((friendRequest) => {
             return <FriendRequest key = { friendRequest.username } firstname = { friendRequest.firstname } 
-            lastname = { friendRequest.lastname } username = { friendRequest.username } acceptRequest = { this.acceptRequest } />
+            lastname = { friendRequest.lastname } username = { friendRequest.username }
+            acceptRequest = { this.acceptRequest } ignoreRequest = { this.ignoreRequest } />
         })
     }
 }

@@ -9,10 +9,6 @@ export class FriendPage extends Component {
             <div className = "test p-3 topheader">
                 <h1>{ this.props.data.firstname } { this.props.data.lastname }'s page</h1>
             </div>
-            {/* <div className ="test p-4 text-center">
-                <input type="text" className="w-75" style={{height: "35px"}} id="userName" placeholder=""/>
-                <button className="btn btn-primary">Write post</button>
-            </div> */}
             <div className = "row" >
                 
                 <div className = "col-md-8 mx-auto" >
