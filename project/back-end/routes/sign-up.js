@@ -25,8 +25,8 @@ router.post('/', function(req, res, next) {
                 dbo.collection("users").insertOne({"firstname": firstname, "lastname": lastname, "email": email, "username": username, "password": password,
                 "friends": [], "friendsLastModified": new Date(), "posts": [], "sendRequests": [], "receivedRequests": [], "loggedInID": loggedInID["loggedInID"]})
                 .then((data) => {
-                    let userProfile = {"firstname": firstname, "lastname": lastname, "email": email
-                    , "friends": [], "posts": [], "sendRequests": [], "receiveRequests": [], "loggedInID": loggedInID["loggedInID"]};
+                    let userProfile = {"firstname": firstname, "lastname": lastname, "email": email, "username": username
+                    , "friends": [], "posts": [], "sendRequests": [], "receivedRequests": [], "loggedInID": loggedInID["loggedInID"]};
                     res.status(200).send(userProfile);
                     database.close();
                 })

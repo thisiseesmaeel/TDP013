@@ -16,6 +16,7 @@ export class ProfilePage extends Component {
             myUsername: this.props.data.username,
             loggedInID: this.props.data.loggedInID
         }
+        console.log(object)
         await fetch("http://localhost:3000/logout", {
             method: 'POST',
             headers: {
