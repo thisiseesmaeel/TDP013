@@ -6,7 +6,7 @@ export class FoundUserList extends Component {
         super(props)
         this.state = {
             foundUsers: [],
-            query: ""
+            query: "",
         }
         this.handleQueryChange = this.handleQueryChange.bind(this)
         this.find = this.find.bind(this)

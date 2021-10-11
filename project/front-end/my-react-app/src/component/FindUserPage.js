@@ -60,7 +60,7 @@ export class FindUserPage extends Component {
             <div>
                 <div className="primary-box p-3 topheader">
                     <div className="d-flex justify-content-between ">
-                        <h1 >Welcome { this.props.data.firstname }</h1>
+                        <h1>Welcome { this.props.data.firstname }</h1>
                         <div className = "d-flex justify-content-around" style ={{ width: "200px"}}>
                             <button className="btn btn-primary btn-sm" style = {{ borderColor: "white" }} onClick = { this.showProfile }> My profile </button>
                             <button className="btn btn-danger btn-sm" onClick = { this.logout }> Logout </button>

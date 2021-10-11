@@ -54,7 +54,6 @@ export class LoginPage extends Component {
             <>
             <h1 className="text-center text-primary mt-5">Facebook 2.0</h1>
             <div className= "d-flex flex-column w-50 mx-auto mt-4">
-                
                 <div className="p-4">
                     <div className="form-group w-50 mx-auto mb-4">
                         <input type="text" value = { this.state.username } onChange={ this.handleChangeUsername } className="form-control" id="userName" placeholder="Username"/>

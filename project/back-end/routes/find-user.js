@@ -20,7 +20,7 @@ router.post('/', function(req, res, next) {
             if(error){ throw error; }
                 if(result.length > 1){ res.status(500).send("Internal Server Error");}
                 if(result[0].loggedInID == loggedInID && result[0].loggedInID != null){
-                    let myFriends = result[0].friends;
+                    let myFriends = result[0].friends;                ;
                     dbo.collection("users").find({"firstname": new RegExp(firstname, 'i'), "lastname": new RegExp(lastname, 'i')}).toArray((error, searchResult) => {
                         if(error){ throw error; }
                         if(searchResult.length == 0){
@@ -28,7 +28,8 @@ router.post('/', function(req, res, next) {
                         }else{
                             let foundUsers = [];
                             searchResult.forEach((profile) => {
-                                let isMyFriend = false; 
+                                let isMyFriend = false;
+
                                 for (var i = 0; i < myFriends.length ; i++) {
                                         if(myFriends[i].username === profile.username)
                                         {
@@ -37,7 +38,7 @@ router.post('/', function(req, res, next) {
                                         }
                                     }
                                 let temp = { "firstname": profile.firstname, "lastname": profile.lastname, "username": profile.username }
-                                if(!isMyFriend) { foundUsers.push(temp) }
+                                if(!isMyFriend && profile.username != myUsername ) { foundUsers.push(temp) }
 
                             });
                             if(foundUsers.length <= 0){
