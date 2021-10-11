@@ -8,7 +8,8 @@ export class SignupPage extends Component {
             lastname: 'Haglund',
             email: 'ph@liu.se',
             username: 'pontus1',
-            password: '1'
+            password: '1',
+            errorMessage: null
         }
 
         this.handleChangeFirstname = this.handleChangeFirstname.bind(this)
@@ -63,48 +64,46 @@ export class SignupPage extends Component {
             return res.json()
         })
         .then((data) => {
-            console.log("HEREEEEEEEEEEE")
-            console.log(data)
             this.props.changePage("profile-page", data)
         }).catch((err) => {
-            console.log('Error! Could not create an account.')
-            console.log(err.message)
+            if(err.message === "409") { this.setState({errorMessage: "OBS! Username already exists."})}
         })
         
     }
     render() {
         return (
             <div>
-                <div className="border border-danger p-4">
+                <div className="primary-box p-4">
 
-                <div className="form-group w-25">
-                <label htmlFor="firstName">First Name: </label>
-                <input type="text" className="form-control" value = { this.state.firstname } onChange ={ this.handleChangeFirstname } id="firstName" placeholder="Enter your first name"/>
+                <div className="d-flex form-group w-50 mx-auto mb-4">
+                    <label htmlFor="firstName" className = "w-25 pt-2"><strong>Firstname</strong></label>
+                    <input type="text" className="form-control w-50" value = { this.state.firstname } onChange ={ this.handleChangeFirstname } id="firstName" placeholder="Enter your first name"/>
+                </div>
+                
+                <div className="d-flex form-group w-50 mx-auto mb-4">
+                    <label htmlFor="lastName" className = "w-25 pt-2"><strong>Last Name</strong></label>
+                    <input type="text" className="form-control w-50" value = { this.state.lastname } onChange ={ this.handleChangeLastname } id="lastName" placeholder="Enter your last name"/>
                 </div>
 
-                <div className="form-group w-25">
-                <label htmlFor="lastName">Last Name: </label>
-                <input type="text" className="form-control" value = { this.state.lastname } onChange ={ this.handleChangeLastname } id="lastName" placeholder="Enter your last name"/>
+                <div className="d-flex form-group w-50 mx-auto mb-4">
+                    <label htmlFor="userName" className = "w-25 pt-2"><strong>Email</strong></label>
+                    <input type="text" className="form-control w-50" value = { this.state.email } onChange ={ this.handleChangeEmail } id="email" placeholder="Enter your email-address"/>
                 </div>
 
-                <div className="form-group w-25">
-                <label htmlFor="userName">Email: </label>
-                <input type="text" className="form-control" value = { this.state.email } onChange ={ this.handleChangeEmail } id="email" placeholder="Enter your email-address"/>
+                <div className="d-flex form-group w-50 mx-auto mb-4">
+                    <label htmlFor="userName" className = "w-25 pt-2"><strong>Username</strong></label>
+                    <input type="text" className="form-control w-50" value = { this.state.username } onChange ={ this.handleChangeUsername} id="userName" placeholder="Create your username"/>
                 </div>
 
-                <div className="form-group w-25">
-                <label htmlFor="userName">Username: </label>
-                <input type="text" className="form-control" value = { this.state.username } onChange ={ this.handleChangeUsername} id="userName" placeholder="Create your username"/>
+                <div className="d-flex form-group w-50 mx-auto mb-4">
+                    <label htmlFor="password" className = "w-25 pt-2" ><strong>Password</strong></label>
+                    <input type="text" className="form-control w-50" value = {this.state.password} onChange ={ this.handleChangePassword } id="password" placeholder="Create a password"/>
                 </div>
-
-                <div className="form-group w-25">
-                    <label htmlFor="password">Password: </label>
-                    <input type="text" className="form-control" value = {this.state.password} onChange ={ this.handleChangePassword } id="password" placeholder="Create a password"/>
+                <div className = "text-center mx-auto w-50" style = {{color: "red"}}> { this.state.errorMessage } </div>
+                <div className="d-flex justify-content-around w-25 mx-auto text-center p-3">
+                    <button className="btn btn-primary" onClick = { this.signup }>Sign up</button>
+                    <button className="btn btn-primary" onClick = {() => this.props.changePage("start-page") }>Back</button>
                 </div>
-
-                <div className="text-center p-3"><button className="w-50 btn btn-primary" onClick = { this.signup }>Sign up</button></div>
-
-
                 </div>
             </div>
         )

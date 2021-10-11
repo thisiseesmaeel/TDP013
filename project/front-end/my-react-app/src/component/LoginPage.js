@@ -64,7 +64,10 @@ export class LoginPage extends Component {
                         <input type="text" value = { this.state.password } onChange={ this.handleChangePassword }  className="form-control" id="password" placeholder="Password"/>
                     </div>
                     <div className = "text-center" style = {{ color: "red" }}> { this.state.errorMessage } </div>
-                    <div className="text-center p-3"><button onClick = { this.login } className="w-25 btn btn-primary">Log In</button></div>
+                    <div className="w-75 d-flex justify-content-around text-center p-3 mx-auto">
+                        <button onClick = { this.login } className="w-25 btn btn-primary">Log In</button>
+                        <button onClick = { () => this.props.changePage("start-page") } className="w-25 btn btn-primary">Back</button>
+                    </div>
                 </div>
             </div>
             </>
