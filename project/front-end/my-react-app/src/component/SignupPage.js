@@ -4,11 +4,11 @@ export class SignupPage extends Component {
     constructor(props){
         super(props)
         this.state = {
-            firstname: 'Pontus',
-            lastname: 'Haglund',
-            email: 'ph@liu.se',
-            username: 'pontus1',
-            password: '1',
+            firstname: '',
+            lastname: '',
+            email: '',
+            username: '',
+            password: '',
             errorMessage: null
         }
 
@@ -77,27 +77,27 @@ export class SignupPage extends Component {
 
                 <div className="d-flex form-group w-50 mx-auto mb-4">
                     <label htmlFor="firstName" className = "w-25 pt-2"><strong>Firstname</strong></label>
-                    <input type="text" className="form-control w-50" value = { this.state.firstname } onChange ={ this.handleChangeFirstname } id="firstName" placeholder="Enter your first name"/>
+                    <input type="text" className="form-control w-50" value = { this.state.firstname } onChange ={ this.handleChangeFirstname } id="firstName"/>
                 </div>
                 
                 <div className="d-flex form-group w-50 mx-auto mb-4">
                     <label htmlFor="lastName" className = "w-25 pt-2"><strong>Last Name</strong></label>
-                    <input type="text" className="form-control w-50" value = { this.state.lastname } onChange ={ this.handleChangeLastname } id="lastName" placeholder="Enter your last name"/>
+                    <input type="text" className="form-control w-50" value = { this.state.lastname } onChange ={ this.handleChangeLastname } id="lastName" />
                 </div>
 
                 <div className="d-flex form-group w-50 mx-auto mb-4">
                     <label htmlFor="userName" className = "w-25 pt-2"><strong>Email</strong></label>
-                    <input type="text" className="form-control w-50" value = { this.state.email } onChange ={ this.handleChangeEmail } id="email" placeholder="Enter your email-address"/>
+                    <input type="text" className="form-control w-50" value = { this.state.email } onChange ={ this.handleChangeEmail } id="email"/>
                 </div>
 
                 <div className="d-flex form-group w-50 mx-auto mb-4">
                     <label htmlFor="userName" className = "w-25 pt-2"><strong>Username</strong></label>
-                    <input type="text" className="form-control w-50" value = { this.state.username } onChange ={ this.handleChangeUsername} id="userName" placeholder="Create your username"/>
+                    <input type="text" className="form-control w-50" value = { this.state.username } onChange ={ this.handleChangeUsername} id="userName" />
                 </div>
 
                 <div className="d-flex form-group w-50 mx-auto mb-4">
                     <label htmlFor="password" className = "w-25 pt-2" ><strong>Password</strong></label>
-                    <input type="text" className="form-control w-50" value = {this.state.password} onChange ={ this.handleChangePassword } id="password" placeholder="Create a password"/>
+                    <input type="text" className="form-control w-50" value = {this.state.password} onChange ={ this.handleChangePassword } id="password" />
                 </div>
                 <div className = "text-center mx-auto w-50" style = {{color: "red"}}> { this.state.errorMessage } </div>
                 <div className="d-flex justify-content-around w-25 mx-auto text-center p-3">

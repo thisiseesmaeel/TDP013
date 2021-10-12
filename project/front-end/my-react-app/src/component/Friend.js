@@ -13,12 +13,12 @@ export class Friend extends Component {
     render() {
         return (
             <>
-            <div className="primary-box animation text-center p-1 mb-3">
-            <h5> {this.props.firstname} {this.props.lastname}  </h5>
-            <button className="w-50 btn btn-primary mr-2 btn-sm" 
-            onClick = { this.showFriend }>Show profile</button>
-            <button className="w-50 btn btn-primary mr-2 btn-sm" 
-            onClick = {() => this.props.changePage("chat-page", {friendUsername: this.props.username}) }>Chat</button>
+            <div className="shadow-box primary-box animation text-center mt-4 p-3">
+                <h5> {this.props.firstname} {this.props.lastname}  </h5>
+                    <button className="btn btn-primary btn-sm w-50"
+                    onClick = { this.showFriend }>Profile</button>
+                    <button className="btn btn-primary btn-sm w-50" 
+                    onClick = {() => this.props.changePage("chat-page", {friendUsername: this.props.username}) }>Chat</button>
             </div> 
             </>
         )

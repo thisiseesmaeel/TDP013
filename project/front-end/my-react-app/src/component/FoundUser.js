@@ -69,7 +69,7 @@ export class FoundUser extends Component {
 
     render() {
         return (
-            <div className = "row" >
+            <div className = "row animation2" >
                 <div className = "col-md-8 mx-auto" >
                     <div className="primary-box mt-4 p-3">
                         <h2>{ this.props.firstname } { this.props.lastname }</h2>

@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 export class FriendRequest extends Component {
     render() {
         return (
-            <div className="primary-box animation mt-4 p-3">
+            <div className="shadow-box primary-box animation mt-4 p-3">
                 <h5>{ this.props.firstname } { this.props.lastname }</h5>
                 <div className="d-flex">
                     <button className="w-50 btn btn-success mr-2 btn-sm" 
