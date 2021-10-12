@@ -6,6 +6,9 @@ import FriendRequestList from './FriendRequestList'
 export class ProfilePage extends Component {
     constructor(props){
         super(props)
+
+        this.props.setMyCred(this.props.data.username, this.props.data.loggedInID)
+
         this.logout = this.logout.bind(this)
         this.showFriend = this.showFriend.bind(this)
     }
@@ -51,7 +54,7 @@ export class ProfilePage extends Component {
             return res.json()
         })
         .then((friendsInfo) => {
-            this.props.setMyCred(this.props.data.username, this.props.data.loggedInID)
+            
             this.props.changePage("friend-page", friendsInfo)
         }).catch((err) => {
             console.log(err.message)
@@ -80,7 +83,7 @@ export class ProfilePage extends Component {
                         <h4>Friends list</h4>
                         <FriendList friends = { this.props.data.friends } myUsername = { this.props.data.username }
                         loggedInID = { this.props.data.loggedInID } 
-                        showFriend = { this.showFriend }/>
+                        showFriend = { this.showFriend } changePage = {this.props.changePage}/>
             
                     </div>
                     <div className="primary-box w-50 mr-2 p-2" style={{ minHeight: "600px" }}>

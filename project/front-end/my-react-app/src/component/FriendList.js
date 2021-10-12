@@ -49,7 +49,7 @@ export class FriendList extends Component {
             <Friend key = { friend.username } firstname = {friend.firstname} 
             lastname = {friend.lastname} username = { friend.username }
             showFriend = { this.props.showFriend }
-            /> 
+            changePage = {this.props.changePage} /> 
             ))
     }
 }

@@ -20,6 +20,10 @@
     "nodemon": "^2.0.13",
     "nyc": "^15.1.0",
     "should": "^13.2.3",
+    "socket.io": "^4.2.0",
     "superagent": "^6.1.0"
+  },
+  "devDependencies": {
+    "kill-port": "^1.6.1"
   }
 }

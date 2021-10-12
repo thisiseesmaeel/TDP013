@@ -21,10 +21,19 @@ const acceptRequestRouter = require('./routes/accept-request');
 const ignoreRequestRouter = require('./routes/ignore-request');
 const showPostsRouter = require('./routes/show-posts')
 const myProfileRouter = require('./routes/my-profile')
+const chatRouter = require('./routes/chat')
 
 var app = express();
 
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With',
+  'Content-Type, Accept');
+  next();
+ });
+
 app.use(cors());
+
 
 
 // view engine setup
@@ -51,6 +60,7 @@ app.use('/acceptrequest', acceptRequestRouter);
 app.use('/ignorerequest', ignoreRequestRouter);
 app.use('/showposts', showPostsRouter);
 app.use('/myprofile', myProfileRouter);
+app.use('/chat', chatRouter);
 
 
 // catch 404 and forward to error handler

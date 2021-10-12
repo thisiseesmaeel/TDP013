@@ -6,6 +6,7 @@ import LoginPage from './LoginPage'
 import ProfilePage from './ProfilePage'
 import FindUserPage from './FindUserPage'
 import FriendPage from './FriendPage'
+import ChatPage from './ChatPage'
 //plugin
 
 export class Page extends Component {
@@ -45,6 +46,9 @@ export class Page extends Component {
                 return <FindUserPage changePage = {this.changePage} data = { this.state.data } />
             case "friend-page":
                 return <FriendPage changePage = {this.changePage} data = { this.state.data }
+                myUsername = { this.state.myUsername } loggedInID = { this.state.loggedInID }/>
+            case "chat-page":
+                return <ChatPage changePage = {this.changePage} data = { this.state.data }
                 myUsername = { this.state.myUsername } loggedInID = { this.state.loggedInID }/>
             default:
                 return <h1>Undefined page!</h1>
