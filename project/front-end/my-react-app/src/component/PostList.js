@@ -92,7 +92,7 @@ export class PostList extends Component {
             console.log("There is no new postlist.") 
         }
         
-    }, 35000)
+    }, 10000)
     }
     componentWillUnmount()
     {

@@ -1,5 +1,5 @@
 /* The animation code */
-@keyframes slideInFromLeft {
+@keyframes slideInFromBottom {
   0% {
     transform: translateY(70%);
   }
@@ -17,10 +17,10 @@ body{
   /* border-radius: 6px; */
 }
 .animation{
-  animation: 0.5s ease-out 0s 1 slideInFromLeft;
+  animation: 0.5s ease-out 0s 1 slideInFromBottom;
 }
 .animation2{
-  animation: 1.5s ease-out 0s 1 slideInFromLeft;
+  animation: 1.5s ease-out 0s 1 slideInFromBottom;
 }
 .topheader{
   background-color: #0d6efd;

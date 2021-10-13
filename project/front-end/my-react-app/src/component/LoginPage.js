@@ -6,7 +6,7 @@ export class LoginPage extends Component {
         this.state = 
         {
 
-            username: 'hadi123',
+            username: '',
             password: '',
             errorMessage: ''
         }

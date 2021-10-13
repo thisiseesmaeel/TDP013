@@ -101,7 +101,7 @@ export class FriendRequestList extends Component {
                     this.setState({friendRequestList: updatedFriendRequests})
                 }
             else{ console.log("There is no new friend request.") }
-        }, 35000)
+        }, 10000)
     }
 
     componentWillUnmount()

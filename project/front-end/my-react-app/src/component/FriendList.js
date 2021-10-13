@@ -36,7 +36,7 @@ export class FriendList extends Component {
             }).catch((err) => {
                 console.log(err.message)
             })
-        }, 35000)        
+        }, 10000)        
     }
 
     componentWillUnmount()
