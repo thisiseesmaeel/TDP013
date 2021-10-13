@@ -7,7 +7,8 @@ export class PostList extends Component {
         this.state = {
             postList: this.props.postList,
             message: "",
-            myInterval: null
+            myInterval: null,
+            errorMessage: null
         }
         console.log("From postlist!")
         console.log(this.state.postList)
@@ -49,35 +50,44 @@ export class PostList extends Component {
     post = () =>
     {
         console.log("I am trying to post something ...")
-        console.log(this.props.myUsername)
-        console.log(this.props.loggedInID)
-        console.log(this.props.destUsername)
-        console.log(this.state.message)
-        const object = {
-            myUsername: this.props.myUsername,
-            loggedInID: this.props.loggedInID,
-            destUsername: this.props.destUsername,
-            message : this.state.message
-            }
 
-        fetch("http://localhost:3000/writepost", {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-              },
-            body: JSON.stringify(object)
-        }).then((res) => 
-        {   
-            if(!res.ok) {throw new Error(res.status)}
-            return res.json()
-        })
-        .then(async (data) => {
-            let updatedPostList = await this.updatePostList()
-            console.log("New postlist detected. Updating posts...")
-            this.setState({postList: updatedPostList, message: ""})
-        }).catch((err) => {
-            console.log(err.message)
-        })
+        if(this.state.message.length <= 0 || this.state.message.length > 140)
+        {
+            this.setState({errorMessage: "You cannot post an empty message or a message with more than 140 characters."})
+        }
+        else{
+            console.log(this.props.myUsername)
+            console.log(this.props.loggedInID)
+            console.log(this.props.destUsername)
+            console.log(this.state.message)
+            const object = {
+                myUsername: this.props.myUsername,
+                loggedInID: this.props.loggedInID,
+                destUsername: this.props.destUsername,
+                message : this.state.message
+                }
+
+            fetch("http://localhost:3000/writepost", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(object)
+            }).then((res) => 
+            {   
+                if(!res.ok) {throw new Error(res.status)}
+                return res.json()
+            })
+            .then(async (data) => {
+                let updatedPostList = await this.updatePostList()
+                console.log("New postlist detected. Updating posts...")
+                this.setState({postList: updatedPostList, message: "", errorMessage: null})
+            }).catch((err) => {
+                console.log(err.message)
+            })
+
+        }
+        
     }
 
     componentDidMount(){
@@ -111,6 +121,7 @@ export class PostList extends Component {
                 <button className="btn btn-primary" onClick = { this.post }>Post</button>
             </div>
             <div id = "insertion_point">
+            <div className = "text-center mx-auto w-50" style = {{color: "red"}}> { this.state.errorMessage } </div> 
                 { element } 
             </div>
           

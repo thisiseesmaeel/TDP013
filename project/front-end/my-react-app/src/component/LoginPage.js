@@ -56,11 +56,13 @@ export class LoginPage extends Component {
             <div className= "d-flex flex-column w-50 mx-auto mt-4">
                 <div className="p-4">
                     <div className="form-group w-50 mx-auto mb-4">
-                        <input type="text" value = { this.state.username } onChange={ this.handleChangeUsername } className="form-control" id="userName" placeholder="Username"/>
+                        <input type="text" value = { this.state.username } onChange={ this.handleChangeUsername } 
+                        className="form-control" id="userName" placeholder="Username"/>
                     </div>
 
                     <div className="form-group w-50 mx-auto mb-4">
-                        <input type="text" value = { this.state.password } onChange={ this.handleChangePassword }  className="form-control" id="password" placeholder="Password"/>
+                        <input type="password" value = { this.state.password } onChange={ this.handleChangePassword } 
+                        className="form-control" id="password" placeholder="Password" />
                     </div>
                     <div className = "text-center" style = {{ color: "red" }}> { this.state.errorMessage } </div>
                     <div className="w-75 d-flex justify-content-around text-center p-3 mx-auto">

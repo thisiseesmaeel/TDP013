@@ -18,7 +18,7 @@ export class Friend extends Component {
                     <button className="btn btn-primary btn-sm w-50"
                     onClick = { this.showFriend }>Profile</button>
                     <button className="btn btn-primary btn-sm w-50" 
-                    onClick = {() => this.props.changePage("chat-page", {friendUsername: this.props.username}) }>Chat</button>
+                    onClick = {() => this.props.changePage("chat-page", {friendFirstname: this.props.firstname, friendLastname: this.props.lastname, friendUsername: this.props.username}) }>Chat</button>
             </div> 
             </>
         )
