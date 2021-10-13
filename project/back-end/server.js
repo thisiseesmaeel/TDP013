@@ -13,12 +13,11 @@ function makeServer (server){
         })
         socket.on("join-room", room => {
             chatRoom = room
-            socket.to(chatRoom).emit("chat message", "Your friend joined to the room")
+            socket.to(chatRoom).emit("chat message", "joined to the room")
             socket.join(chatRoom)
         })
         socket.on('disconnect', s =>{
-            console.log("Your friend left the room.")
-            io.to(chatRoom).emit("chat message","Your friend left the room.")
+            io.to(chatRoom).emit("chat message","left the room.")
         })
     })
 }
