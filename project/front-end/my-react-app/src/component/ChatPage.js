@@ -16,7 +16,6 @@ export class ChatPage extends Component {
             errorMessage: null
         }
 
-
         if( this.props.data.friendUsername > this.props.myUsername )
         {
             this.state.room = this.props.data.friendUsername + this.props.myUsername
@@ -27,6 +26,8 @@ export class ChatPage extends Component {
         this.state.socket = io.connect("http://localhost:3000/")
         this.state.socket.emit("join-room", this.state.room)
 
+        this.showProfile = this.showProfile.bind(this)
+        this.logout = this.logout.bind(this)
         this.sendMessage = this.sendMessage.bind(this)
         this.handleChat = this.handleChat.bind(this)
     }
@@ -52,6 +53,52 @@ export class ChatPage extends Component {
             this.state.socket.emit("chat message", this.state.message, this.state.room)
             this.setState({sentMessage: this.state.message, chatLog: [...this.state.chatLog, {"owner": "Me", message: this.state.message}], message: "", errorMessage: null})
         }
+    }
+
+    showProfile = () => {
+        const object = {
+            myUsername: this.props.myUsername,
+            loggedInID: this.props.loggedInID
+        }
+        fetch("http://localhost:3000/myprofile", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+                },
+            body: JSON.stringify(object)
+        }).then((res) => 
+        {   
+            if(!res.ok) {throw new Error(res.status)}
+            return res.json()
+        })
+        .then((data) => {
+            this.state.socket.disconnect()
+            this.props.changePage("profile-page", data)
+        }).catch((err) => {
+            console.log(err.message)
+        })
+    }
+
+    logout = async () => {
+        console.log("Trying to logout...")
+        const object = {
+            myUsername: this.props.myUsername,
+            loggedInID: this.props.loggedInID
+        }
+        await fetch("http://localhost:3000/logout", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+                },
+            body: JSON.stringify(object)
+        }).then((res) => 
+        {   
+            if(!res.ok) {throw new Error(res.status)}
+        }).catch((err) => {
+            console.log(err.message)
+        })
+        this.state.socket.disconnect()
+        this.props.changePage("start-page")
     }
     render() {
         return (
