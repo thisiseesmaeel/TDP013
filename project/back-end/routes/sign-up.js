@@ -23,7 +23,7 @@ router.post('/', function(req, res, next) {
             }else{
                 loggedInID = {"loggedInID": Math.floor(100000 + Math.random() * 900000)};
                 dbo.collection("users").insertOne({"firstname": firstname, "lastname": lastname, "email": email, "username": username, "password": password,
-                "friends": [], "friendsLastModified": new Date(), "posts": [], "sendRequests": [], "receivedRequests": [], "loggedInID": loggedInID["loggedInID"]})
+                "friends": [], "posts": [], "sendRequests": [], "receivedRequests": [], "loggedInID": loggedInID["loggedInID"]})
                 .then((data) => {
                     let userProfile = {"firstname": firstname, "lastname": lastname, "email": email, "username": username
                     , "friends": [], "posts": [], "sendRequests": [], "receivedRequests": [], "loggedInID": loggedInID["loggedInID"]};

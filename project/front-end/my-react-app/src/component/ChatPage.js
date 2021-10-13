@@ -2,8 +2,6 @@ import React, { Component } from 'react'
 import io from 'socket.io-client'
 import ChatLog from './ChatLog'
 
-//const socket = io.connect("http://localhost:3000/")
-
 export class ChatPage extends Component {
     constructor(props){
         super(props)
