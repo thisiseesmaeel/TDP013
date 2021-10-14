@@ -1,12 +1,10 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-var cors = require('cors');
+let createError = require('http-errors');
+let express = require('express');
+let path = require('path');
+let cookieParser = require('cookie-parser');
+let logger = require('morgan');
+let cors = require('cors');
 
-
-var indexRouter = require('./routes/index');
 
 const loginRouter = require('./routes/login');
 const signUpRouter = require('./routes/sign-up');
@@ -21,9 +19,8 @@ const acceptRequestRouter = require('./routes/accept-request');
 const ignoreRequestRouter = require('./routes/ignore-request');
 const showPostsRouter = require('./routes/show-posts')
 const myProfileRouter = require('./routes/my-profile')
-const chatRouter = require('./routes/chat')
 
-var app = express();
+let app = express();
 
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
@@ -60,7 +57,6 @@ app.use('/acceptrequest', acceptRequestRouter);
 app.use('/ignorerequest', ignoreRequestRouter);
 app.use('/showposts', showPostsRouter);
 app.use('/myprofile', myProfileRouter);
-app.use('/chat', chatRouter);
 
 
 // catch 404 and forward to error handler

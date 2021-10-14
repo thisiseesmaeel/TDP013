@@ -1,12 +1,12 @@
-var express = require('express');
+let express = require('express');
 const { use } = require('.');
-var router = express.Router();
+let router = express.Router();
 const { MongoClient } = require('mongodb');
 const url = "mongodb://localhost:27017/";
 
 /* Logout the profile. */
   
-router.post('/', function(req, res, next) {
+router.post('/', function(req, res) {
     const { myUsername, loggedInID} = req.body;
     if(typeof(myUsername) != "string" || typeof(loggedInID) != "number")
     { 
@@ -16,12 +16,17 @@ router.post('/', function(req, res, next) {
         MongoClient.connect(url, (error, database) => {
             if(error) { throw error; }
             let dbo = database.db("database");
-            dbo.collection("users").find({"username": myUsername}).toArray((error, result) => {
-                if(error){ throw error;}
+            dbo.collection("users").find({"username": myUsername}).toArray((err, result) => {
+                if(err){ throw err;}
                 if(result.length <= 0 ){
                     res.status(404).send("User not found!");
                     database.close();
-                }else if(result[0].loggedInID == loggedInID && result[0].loggedInID != null){
+                }
+                // else if(result.length <= 0){
+                //         res.status(400).send("User not found!");
+                //         database.close();
+                // }
+                else if(result[0].loggedInID == loggedInID && result[0].loggedInID != null){
                     dbo.collection("users").updateOne({"username": myUsername}, {$set : {"loggedInID": null}}, (error, res1) => {
                         if(error){ throw error; }
                         if(res1.length == 0){
