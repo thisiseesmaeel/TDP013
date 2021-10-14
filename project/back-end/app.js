@@ -4,7 +4,7 @@ let path = require('path');
 let cookieParser = require('cookie-parser');
 let logger = require('morgan');
 let cors = require('cors');
-
+const xssClean = require('xss-clean');
 
 const loginRouter = require('./routes/login');
 const signUpRouter = require('./routes/sign-up');
@@ -20,8 +20,10 @@ const ignoreRequestRouter = require('./routes/ignore-request');
 const showPostsRouter = require('./routes/show-posts')
 const myProfileRouter = require('./routes/my-profile')
 
+/// middlewares
 let app = express();
 
+app.use(xssClean()); // sanitizes the get and post requests
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With',
@@ -57,6 +59,7 @@ app.use('/acceptrequest', acceptRequestRouter);
 app.use('/ignorerequest', ignoreRequestRouter);
 app.use('/showposts', showPostsRouter);
 app.use('/myprofile', myProfileRouter);
+
 
 
 // catch 404 and forward to error handler

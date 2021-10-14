@@ -1,6 +1,5 @@
-var express = require('express');
-const { use } = require('.');
-var router = express.Router();
+let express = require('express');
+let router = express.Router();
 const { MongoClient } = require('mongodb');
 const url = "mongodb://localhost:27017/";
 
@@ -20,16 +19,25 @@ router.post('/', function(req, res, next) {
             dbo.collection("users").find({"username": myUsername, "loggedInID": loggedInID}).toArray((error, result) => {
                 if(error){ throw error; }
                 if(result.length <= 0){
-                    res.status(401).send("Unauthorized!");
+                    res.status(404).send("Not found");
                     database.close();
-                }else{
+                }
+                else if(result.length > 1){
+                    res.status(500).send("Internal Server Error!");
+                    database.close();
+                }
+                else if(result[0].loggedInID == loggedInID && result[0].loggedInID != null){
                     const posts = result[0].posts.sort((a,b) => (a.time < b.time) ? 1 : ((b.time < a.time) ? -1 : 0))
                     let userProfile = {"firstname": result[0].firstname, "lastname": result[0].lastname, "username": result[0].username ,"email": result[0].email
                     , "friends": result[0].friends, "posts": posts, "sendRequests": result[0].sendRequests,
                     "receivedRequests": result[0].receivedRequests, "loggedInID": loggedInID};
                     res.status(200).send(userProfile);
                     database.close();
-                }  
+                }
+                else{
+                    res.status(401).send("Unauthorized!");
+                    database.close();
+                }
             });
         });
     }

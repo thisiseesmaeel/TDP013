@@ -1,5 +1,4 @@
 var express = require('express');
-const { use } = require('.');
 var router = express.Router();
 const { MongoClient } = require('mongodb');
 const url = "mongodb://localhost:27017/";

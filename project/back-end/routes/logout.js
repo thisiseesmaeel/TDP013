@@ -1,5 +1,4 @@
 let express = require('express');
-const { use } = require('.');
 let router = express.Router();
 const { MongoClient } = require('mongodb');
 const url = "mongodb://localhost:27017/";
@@ -22,15 +21,15 @@ router.post('/', function(req, res) {
                     res.status(404).send("User not found!");
                     database.close();
                 }
-                // else if(result.length <= 0){
-                //         res.status(400).send("User not found!");
-                //         database.close();
-                // }
+                else if(result.length > 1){
+                    res.status(500).send("Internal Server Error!");
+                    database.close();
+                }
                 else if(result[0].loggedInID == loggedInID && result[0].loggedInID != null){
                     dbo.collection("users").updateOne({"username": myUsername}, {$set : {"loggedInID": null}}, (error, res1) => {
                         if(error){ throw error; }
-                        if(res1.length == 0){
-                            res.status(204).send("No Content!");
+                        if(res1.matchedCount == 0){
+                            res.status(404).send("Not found!");
                         }else{
                             res.status(200).send(res1);
                            
