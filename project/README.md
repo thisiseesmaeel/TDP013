@@ -7,7 +7,7 @@ After cloning repository follow these steps:
 1. Now you can start the server both on back-end (port 3000) and front-end (port 3500) sides by typing **_"npm start"_** in the terminal.
 1. **Enjoy!**
 
-**NOTE!** There are some profiles already created in our database. You can login/out and test the functionalities of the application.
+**NOTE!** _There are some profiles already created in our database. You can login/out and test the functionalities of the application._
 
 Password to all of following profiles is **12345678**.
 * **username**: hadi123            
