@@ -34,7 +34,8 @@ export class FoundUserList extends Component {
     find = () => {
         if(!this.isValidInput(this.state.query))
         {
-            this.setState({errorMessage : "Only space and alphabet are allowed (including Swedish characters). It must be less than 50 characters."})
+            this.setState({errorMessage : "Only space and alphabet are allowed (including Swedish characters). It must be less than 50 characters.", 
+            foundUsers: []})
         }
         else{
             console.log("Trying find some new friends for you...")
@@ -57,6 +58,7 @@ export class FoundUserList extends Component {
             .then((data) => {
                 this.setState({foundUsers: data, errorMessage : null})
             }).catch((err) => {
+                this.setState({foundUsers: [], errorMessage : null})
                 console.log(err.message)
             })
         }  
