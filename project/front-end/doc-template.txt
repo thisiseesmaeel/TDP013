@@ -1,6 +1,0 @@
-{ firstname : "firstname", lastname: "lastname", email: "emailemail.com", username: "user1", password: "user111", "friends": ["user2", "user3", "user4"], "posts": ["lba lbnala", "blalbnala ", "lbalbnala"], "send-reqests": ["user5"], "received-requests": ["user6", "user7", "user8"]}
-
-
-{ firstname : "Ismail", lastname: "Safwat", email: "emailemail.com", username: "ismail222", password: "user111", "friends": ["hadi222"], "posts": [], "sendRequests": [], "receivedRequests": [], "loggedInID": 0}
-
-{ firstname : "Hadi", lastname: "Ansari", email: "emailemail.com", username: "hadi222", password: "user111", "friends": ["ismail222"], "posts": [], "sendRequests": [], "receivedRequests": [], "loggedInID": 0}
