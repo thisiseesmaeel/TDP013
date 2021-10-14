@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import jsSHA from "jssha"
 
 export class LoginPage extends Component {
     constructor(props){
@@ -30,12 +31,18 @@ export class LoginPage extends Component {
 
     login(){
         console.log("I am trying to log in ... ")
+        let hashObj = new jsSHA("SHA-512", "TEXT", {numRounds: 1});
+        hashObj.update(this.state.password)
+        let object = {
+            username: this.state.username,
+            password: hashObj.getHash("HEX")
+        }
         fetch("http://localhost:3000/login", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
               },
-            body: JSON.stringify(this.state)
+            body: JSON.stringify(object)
         }).then((res) => 
         {   
             if(!res.ok) {throw new Error(res.status)}

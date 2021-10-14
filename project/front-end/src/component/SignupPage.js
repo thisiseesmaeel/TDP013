@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import jsSHA from "jssha"
 
 export class SignupPage extends Component {
     constructor(props){
@@ -120,12 +121,15 @@ export class SignupPage extends Component {
             this.setState({errorMessage: "Any non-whitespace characters are not allowed in password! Password must be 8-16 characters long."})
         }
         else {
+            let hashObj = new jsSHA("SHA-512", "TEXT", {numRounds: 1});
+            hashObj.update(this.state.password)
+
             const object = {
                 firstname: this.state.firstname,
                 lastname: this.state.lastname,
                 email: this.state.email,
                 username: this.state.username,
-                password: this.state.password
+                password: hashObj.getHash("HEX")
             }
             fetch("http://localhost:3000/signup", {
                 method: 'POST',
