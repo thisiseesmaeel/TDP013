@@ -1,4 +1,4 @@
-function makeServer (server){
+function makeChatServer (server){
 
     const io = require("socket.io")(server, { cors: {origin: "*"} })
     let userChatroom = new Map()
@@ -22,4 +22,4 @@ function makeServer (server){
     })
 }
 
-module.exports = { makeServer };
+module.exports = { makeChatServer };
