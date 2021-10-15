@@ -1,5 +1,5 @@
-var express = require('express');
-var router = express.Router();
+let express = require('express');
+let router = express.Router();
 const { MongoClient } = require('mongodb');
 const url = "mongodb://localhost:27017/";
 
@@ -37,7 +37,7 @@ router.post('/', function(req, res) {
                             let foundUsers = [];
                             searchResult.forEach((profile) => {
                                 let isMyFriend = false;
-                                for (var i = 0; i < myFriends.length ; i++) {
+                                for (let i = 0; i < myFriends.length ; i++) {
                                         if(myFriends[i].username === profile.username)
                                         {
                                             isMyFriend = true;

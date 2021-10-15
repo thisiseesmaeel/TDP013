@@ -3,200 +3,204 @@ const superagent = require('superagent');
 const should = require('should');
 const { makeServer, closeServer } = require('../bin/server.js');
 const jsSHA = require("jssha");
+const e = require('express');
 
 
 
 const url = "http://localhost:3000/";
-
+let hashObj = new jsSHA("SHA-512", "TEXT", {numRounds: 1})
+hashObj.update("12345678")
+let loggedInID = null
 
 describe("Running tests", () => {
-    before(() => {
-      makeServer();
-      });
-    describe('Trying to login', () => { 
-      it('should return a loggedInID and username', async () => {
-        let hashObj = new jsSHA("SHA-512", "TEXT", {numRounds: 1});
-        hashObj.update("12345678")
-        let res =  await superagent.post(url + 'login')
-            .send({"username": "hadi123", "password": hashObj.getHash("HEX")})
 
-            assert.equal(res.body.username, "hadi123")
+    before((done) => {
+      makeServer();
+      done()
+      });
+    describe('Testing login/out functionality', () => {
+      
+
+      describe('Trying to login to "hadi123".', () => {
+        it('Should return a loggedInID and username', async () => {
+          let res =  await superagent.post(url + 'login')
+              .send({"username": "hadi123", "password": hashObj.getHash("HEX")})
+              loggedInID = res.body.loggedInID
+              assert.equal(res.body.username, "hadi123")
+          })
         })
+        describe('Trying to logout from "hadi123"', () => { 
+          it('Should logout with a confirmation message', async () => {
+            let res =  await superagent.post(url + 'logout')
+                .send({"myUsername": "hadi123", "loggedInID": loggedInID})
+
+                assert.equal(res.body.acknowledged, true)
+            })
+            
+          })
+      describe('Trying to login to "ismail1".', () => {
+        it('Should return a loggedInID and username', async () => {
+          let res =  await superagent.post(url + 'login')
+              .send({"username": "ismail1", "password": hashObj.getHash("HEX")})
+              loggedInID = res.body.loggedInID
+              assert.equal(res.body.username, "ismail1")
+          })
+        })
+        describe('Trying to logout from "ismail1"', () => { 
+          it('Should logout with a confirmation message', async () => {
+            let res =  await superagent.post(url + 'logout')
+                .send({"myUsername": "ismail1", "loggedInID": loggedInID})
+
+                assert.equal(res.body.acknowledged, true)
+                assert.equal(res.body.matchedCount, true)
+                assert.equal(res.body.modifiedCount, true)
+            })
+            
+          })
+      })
+
+    describe('Testing sign-up functionality', () => {
+      describe('Trying to sign up', () => {
+        it('Should create an account with username "spicy_rice"', async () => {
+        let res = await superagent.post(url + 'signup')
+        .send({"firstname": "Hadi", "lastname": "Ansari", "email": "hadi.ansari@yahoo.com", "username": "spicy_rice", "password": hashObj.getHash("HEX")})    
+        loggedInID = res.body.loggedInID
+        assert.equal(res.body.username, "spicy_rice")
+        })
+      })
+
+      describe('Trying to delete', () => {
+        it('Should delete the account with username "spicy_rice"', async () => {
+          let res = await superagent.post(url + 'deleteaccount')
+          .send({"myUsername": "spicy_rice", "myPassword": hashObj.getHash("HEX"), "loggedInID": loggedInID})    
+          assert.equal(res.body.acknowledged, true)
+          assert.equal(res.body.deletedCount, 1)
+        })
+      })
+
     })
-//   describe('Post "Hello"', () => {
-//     it('Should post the message', async () => {
-//       const res = await superagent.post(url + 'save')
-//       .send({message: "Hello", status: "unread"})
-      
-//       assert.equal(res.statusCode, "200")
-      
-//     })
-//   })
+
+
+    describe('Testing Search functionality', () => {
+      describe('Trying to find "ismail1" from user "oskar1" which is not already friend with "ismail1"', () =>{
+        it('Should find a specific user', async () =>{
+          
+          let res = await superagent.post(url + 'login')
+          .send({"username": "oskar1", "password": hashObj.getHash("HEX")})
+          loggedInID = res.body.loggedInID
+          
+          let res2 = await superagent.post(url + 'finduser')
+          .send({"myUsername": "oskar1", "loggedInID": loggedInID, "user": "ismail"})
+          assert.equal(res2.body.length, 1)
+          assert.equal(res2.body[0].firstname, "Ismail")
+          assert.equal(res2.body[0].lastname, "Safwat")
+          
+        })
+      })
+    })
+
+    describe('Testing Friend page functionality', () => {
+      describe('Trying to display profile of "ismail1" via "hadi123"', () =>{
+        it('Should return "hadi123" posts', async () =>{
+          let res = await superagent.post(url + 'login')
+          .send({"username": "hadi123", "password": hashObj.getHash("HEX")})
+
+          loggedInID = res.body.loggedInID
+
+          let res2 = await superagent.post(url + 'friendprofile')
+          .send({"myUsername": "hadi123", "loggedInID": loggedInID, "friendUsername": "ismail1"})
+
+          
   
-//   describe('Get all messages', () => {
-//     it('should return two messages', (done) => {
-//       superagent.get(url + 'getall', (err, res) => {
-//         if(err) {done(err)}
-  
-//         assert.equal(res.body.length, 2)
+          assert.equal(res2.body.posts.length, 3)
+        })
+      })
+    })
+
+    describe('Testing request (send, accept and ignore) functionalities.', () => {
+      evaLoggedInID = null
+      thomasLoggedInID = null
+      describe('Creating two users with usernames "user1" and "user2".', () => {
+        it('Should create two account with usernames "user1" and "user2".', async() => {
+          let res1 = await superagent.post(url + 'signup')
+          .send({"firstname": "Eva", "lastname": "Andersson", "email": "eva@telia.com", "username": "user1", "password": hashObj.getHash("HEX")}) 
+          let res2 = await superagent.post(url + "signup")
+          .send({"firstname": "Thomas", "lastname": "Andersson", "email": "thomas@telia.com", "username": "user2", "password": hashObj.getHash("HEX")})
+          evaLoggedInID = res1.body.loggedInID
+          thomasLoggedInID = res2.body.loggedInID
+
+          assert.equal(res1.body.username, "user1")
+          assert.equal(res2.body.username, "user2")
+        })
+      })
+      describe('Sending friend-request from "user2" to "user1"', () => {
+        it('Should successfully send reqest from "user2" to "user1"', async () => {
+
+        let res = await superagent.post(url + 'sendrequest')
+        .send({"myUsername": "user2", "loggedInID": thomasLoggedInID, "otherFirstname": "Eva", "otherLastname": "Andersson", "otherUsername": "user1"}) 
         
-//         done()
-//       })
-//     })
-//   })
-  
-//     describe('Changing status code of first message', () => {
-//       it('Should change the status to "read"', async () => {
-//         const res = await superagent.post(url + 'flag')
-//         .send({id: "6156c2a539b69bed2864fbdd", status: "read"})
-  
-//         assert.equal(res.statusCode, 200)
-      
-//       })
-//     })
-  
-//     describe('Changing status code of first message', () => {
-//       it('Should change the status to "unread"', async () => {
-//         const res = await superagent.post(url + 'flag')
-//         .send({id: "6156c2a539b69bed2864fbdd", status: "unread"})
-  
-//         assert.equal(res.statusCode, 200)
+        assert.equal(res.statusCode, 200)
+        })
+      })
+      describe('Ignoring friend-request from "user2"', () => {
+        it('Should successfully ignore reqest from "user2".', async () => {
+
+        let res = await superagent.post(url + 'ignorerequest')
+        .send({"myUsername": "user1", "loggedInID": evaLoggedInID, "otherFirstname": "Thomas", "otherLastname": "Andersson", "otherUsername": "user2"}) 
+        assert.equal(res.statusCode, 200)
+        })
+      })
+      describe('Sending friend-request from "user2" to "user1" ONCE AGAIN!', () => {
+        it('Should successfully send reqest from "user2" to "user1"', async () => {
+
+        let res = await superagent.post(url + 'sendrequest')
+        .send({"myUsername": "user2", "loggedInID": thomasLoggedInID, "otherFirstname": "Eva", "otherLastname": "Andersson", "otherUsername": "user1"}) 
         
-//       })
-//     })
+        assert.equal(res.statusCode, 200)
+        })
+      })
+      describe('Accepting friend-request from "user2"', () => {
+        it('Should successfully accept reqest from "user2".', async () => {
+
+        let res = await superagent.post(url + 'acceptrequest')
+        .send({"myUsername": "user1", "loggedInID": evaLoggedInID, "otherFirstname": "Thomas", "otherLastname": "Andersson", "otherUsername": "user2"}) 
+        assert.equal(res.statusCode, 200)
+        })
+      })
+      describe('Deleting users with usernames "user1" and "user2".', () => {
+        it('Should delete accounts with usernames "user1" and "user2".', async() => {
+          let res1 = await superagent.post(url + 'deleteaccount')
+            .send({"myUsername": "user1", "myPassword": hashObj.getHash("HEX"), "loggedInID": evaLoggedInID}) 
+          let res2 = await superagent.post(url + 'deleteaccount')
+            .send({"myUsername": "user2", "myPassword": hashObj.getHash("HEX"), "loggedInID": thomasLoggedInID})
   
-  
-//     describe('Get one specific message', () => {
-//       it('Should return the desired message', () => {
-//         superagent.get(url + 'get/?id=6156c2a539b69bed2864fbdd', (err, res) => {
-//           if(err) {console.log(err)}
-//           const message = res.body[0].message
-//           const status = res.body[0].status
-//           assert.equal(res.statusCode, 200)
-//           assert.equal(message, "This is a simple message!")
-//           assert.equal(status, "unread")
-//         })
-//       })
-//     })
-  
-//     ////////////// 405 error
-//     describe('405 error', () => {
-//       it('should return statuscode 405', (done) => {
-//         superagent.post(url + "get", function(err, res) {
-//             assert.equal(res.statusCode, 405)
-//           done();
-//         })
-//       })
-//     })
-  
-//     describe('405 error', () => {
-//       it('should return statuscode 405', (done) => {
-//         superagent.get(url + "save", function(err, res) {
-//           assert.equal(res.statusCode, 405)
-//           done();
-//         })
-//       })
-//     })
-  
-//     describe('405 error', () => {
-//       it('should return statuscode 405', (done) => {
-//         superagent.post(url + "getall", function(err, res) {
-//             assert.equal(res.statusCode, 405)
-//           done();
-//         })
-//       })
-//     })
-  
-//     describe('405 error', () => {
-//       it('should return statuscode 405', (done) => {
-//         superagent.get(url + "flag", function(err, res) {
-//             assert.equal(res.statusCode, 405)
-//           done();
-//         })
-//       })
-//     })
-//     /////////////////////////
-  
-  
-//     /////////////// Error 404
-//     describe('Trying to reach /lol with a get method', () => {
-//       it('should return statuscode 404', (done) => {
-//         superagent.get(url + "/lol", function(err, res) {
-//           assert.equal(res.statusCode, 404)
-//           done();
-//         })
-//       })
-//     })
-  
-//     describe('Trying to reach /bruh with a post method', () => {
-//       it('should return statuscode 404', () => {
-//         superagent.post(url + "/bruh")
-//         .send({id: "614d81f463694fd02f99ef1d", status: "read"})
-//         .end((err, res) =>{
-//             assert.equal(err.status, 404);
-//         })
-//       })
-//     })
-  
-//     ////////////// Error 400
-//     describe('Changing status code of a message that does NOT exist.', () => {
-//       it('Should return 400 error', async () => {
-//         const res = await superagent.post(url + 'flag')
-//         .send({id: "61424edbae0a291a8c3fd359", status: "unread"})
-//         .catch((err) => {
-//           assert.equal(err.status, 400)
-//         })
-//       })
-//     })
-  
-//     describe("Trying to change an invalid status code of a message.", () => {
-//       it('Should return 400 error', async () => {
-//         await superagent.post(url + 'flag')
-//         .send({id: "614d81f463694fd02f99ef1d", status: "lol"})
-//         .catch((err) => {
-//           assert.equal(err.status, 400)
-//         })
-//       })
-//     })
-  
-  
-//   describe('Trying to post an empty message.', () => {
-//     it('Should return 400 error', async () => {
-//       await superagent.post(url + 'save')
-//        .send({message: "", status: "unread"})
-//        .catch((err) => {
-//          assert.equal(err.status, 400)
-//        })
-//     })
-//   })
-  
-//   describe('Trying to post a message with an invalid status.', () => {
-//     it('Should return 400 error', async () => {
-//         await superagent.post(url + 'save')
-//        .send({message: "This is a message.", status: "lol"})
-//        .catch((err) => {
-//          assert.equal(err.status, 400)
-//        })
-//     })
-//   })
-  
-//   describe('Trying to post a message with more than 140 characters.', () => {
-//     it('Should return 400 error', async () => {
-//        await superagent.post(url + 'save')
-//        .send({message: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.", status: "unread"})
-//        .catch((err) => {
-//           assert.equal(err.status, 400)
-//        })
-//     })
-//   })
-  
-//   describe('Trying to get a message with an invalid ID.', () => {
-//     it('Should return 400 error', () => {
-//       superagent.get(url + 'get?id=61424edbae0a291a8c3fd358', (res, err) => {
-//           assert.equal(res.status, 400)
-//       })
-//     })
-//   })
+          assert.equal(res1.body.acknowledged, true)
+          assert.equal(res1.body.deletedCount, 1)
+          assert.equal(res2.body.acknowledged, true)
+          assert.equal(res2.body.deletedCount, 1)
+        })
+      })
+
+    })
+
+    // describe('', () => {
+    //   describe('', () =>{
+    //     it('', async () =>{
+    //         let res = await superagent.post(url + "")
+    //         .send({})
+    //     })
+    //   })
+    // })
+
+    // Template
+    // describe('', () => {
+    //   describe('', () =>{
+    //     it('', async () =>{
+    //         let res = await superagent.post(url + "")
+    //         .send({})
+    //     })
+    //   })
+    // })
   after( () => {
     closeServer();
     }); 

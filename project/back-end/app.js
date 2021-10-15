@@ -17,8 +17,9 @@ const sendRequestRouter = require('./routes/send-request');
 const showFriendRouter = require('./routes/show-friends');
 const acceptRequestRouter = require('./routes/accept-request');
 const ignoreRequestRouter = require('./routes/ignore-request');
-const showPostsRouter = require('./routes/show-posts')
-const myProfileRouter = require('./routes/my-profile')
+const showPostsRouter = require('./routes/show-posts');
+const myProfileRouter = require('./routes/my-profile');
+const deleteAccount = require('./routes/delete-account');
 
 /// middlewares
 let app = express();
@@ -59,6 +60,7 @@ app.use('/acceptrequest', acceptRequestRouter);
 app.use('/ignorerequest', ignoreRequestRouter);
 app.use('/showposts', showPostsRouter);
 app.use('/myprofile', myProfileRouter);
+app.use('/deleteaccount', deleteAccount);
 
 
 

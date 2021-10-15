@@ -5,7 +5,7 @@
   "scripts": {
     "start": "nodemon --exec node ./bin/startServer.js",
     "test": "mocha",
-    "coverage": "nyc --reporter=html npm test"
+    "coverage": "nyc --reporter=html --reporter=text npm test"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
