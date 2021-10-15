@@ -100,8 +100,6 @@ export class SignupPage extends Component {
     }
     
     signup = () => {
-        console.log("I am trying to signup ... ")
-
         if(this.state.firstname.length <= 0 || this.state.lastname.length <= 0
             || this.state.email.length <= 0 || this.state.username.length <= 0 
             || this.state.password.length <= 0){

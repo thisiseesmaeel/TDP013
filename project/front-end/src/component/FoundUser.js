@@ -13,7 +13,6 @@ export class FoundUser extends Component {
             myUsername: this.props.myUsername,
             loggedInID: this.props.loggedInID
         }
-        console.log(object)
         fetch("http://localhost:3000/myprofile", {
             method: 'POST',
             headers: {
@@ -26,7 +25,6 @@ export class FoundUser extends Component {
             return res.json()
         })
         .then((data) => {
-            console.log(data.sendRequests)
             this.setState({sentReqs: data.sendRequests})
             this.state.sentReqs.forEach(user => {
                 if(user.username === this.props.username) { 
@@ -42,7 +40,6 @@ export class FoundUser extends Component {
         this.sendFriendRequest = this.sendFriendRequest.bind(this)
     }
     sendFriendRequest = ( ) => {
-        console.log(`Sending friend request to ${ this.props.username }`)
         const object = {
             "myUsername": this.props.myUsername,
             "loggedInID": this.props.loggedInID,
@@ -50,7 +47,6 @@ export class FoundUser extends Component {
             "otherLastname": this.props.lastname,
             "otherUsername": this.props.username
         }
-        console.log(object)
         fetch("http://localhost:3000/sendrequest", {
             method: 'POST',
             headers: {
@@ -61,7 +57,6 @@ export class FoundUser extends Component {
         {   
             if(!res.ok) {throw new Error(res.status)}
             this.setState({statusMessage : "Friend request sent to this user.", disappearClass: "disappear"})
-            console.log("Friend request sent!")
         }).catch((err) => {
             console.log(err.message)
         })

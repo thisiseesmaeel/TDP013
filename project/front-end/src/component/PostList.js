@@ -10,8 +10,6 @@ export class PostList extends Component {
             myInterval: null,
             errorMessage: null
         }
-        console.log("From postlist!")
-        console.log(this.state.postList)
         this.handleChangePostMessage = this.handleChangePostMessage.bind(this)
         this.updatePostList = this.updatePostList.bind(this)
         this.post = this.post.bind(this)
@@ -22,7 +20,6 @@ export class PostList extends Component {
     }
 
     updatePostList = async () => {
-        console.log("Checking if there is a newer postlist...")
         let updatedPostList = null
         const object = {
             myUsername: this.props.myUsername,
@@ -49,17 +46,12 @@ export class PostList extends Component {
     }
     post = () =>
     {
-        console.log("I am trying to post something ...")
 
         if(this.state.message.length <= 0 || this.state.message.length > 140)
         {
             this.setState({errorMessage: "You cannot post an empty message or a message with more than 140 characters."})
         }
         else{
-            console.log(this.props.myUsername)
-            console.log(this.props.loggedInID)
-            console.log(this.props.destUsername)
-            console.log(this.state.message)
             const object = {
                 myUsername: this.props.myUsername,
                 loggedInID: this.props.loggedInID,
@@ -80,7 +72,6 @@ export class PostList extends Component {
             })
             .then(async (data) => {
                 let updatedPostList = await this.updatePostList()
-                console.log("New postlist detected. Updating posts...")
                 this.setState({postList: updatedPostList, message: "", errorMessage: null})
             }).catch((err) => {
                 console.log(err.message)
@@ -92,17 +83,11 @@ export class PostList extends Component {
 
     componentDidMount(){
         this.myInterval = setInterval(async () => {
-        let updatedPostList = await this.updatePostList()
-        if(JSON.stringify(updatedPostList) !== JSON.stringify(this.state.postList) )
-        {
-            console.log("New postlist detected. Updating posts...")
-            this.setState({postList: updatedPostList})
-        }
-        else{
-            console.log("There is no new postlist.") 
-        }
-        
-    }, 10000)
+            let updatedPostList = await this.updatePostList()
+            if(JSON.stringify(updatedPostList) !== JSON.stringify(this.state.postList) ){
+                this.setState({postList: updatedPostList})
+                }
+            }, 10000)
     }
     componentWillUnmount()
     {

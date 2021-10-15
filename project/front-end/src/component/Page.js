@@ -7,7 +7,6 @@ import ProfilePage from './ProfilePage'
 import FindUserPage from './FindUserPage'
 import FriendPage from './FriendPage'
 import ChatPage from './ChatPage'
-//plugin
 
 export class Page extends Component {
     constructor(props)
@@ -27,8 +26,6 @@ export class Page extends Component {
         this.setState({ myUsername, loggedInID})  
     }
     changePage = (pageName, data = {}) => {
-        console.log("Change page clicked!")
-        console.log(data)
         this.setState({ page : pageName, data : data})
     }
 

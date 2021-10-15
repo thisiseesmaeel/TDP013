@@ -42,7 +42,6 @@ export class ChatPage extends Component {
     
     sendMessage = (e) => {
         e.preventDefault()
-        console.log(this.state.message)
         if(this.state.message.length <= 0 || this.state.message.length > 140)
         {
             this.setState({errorMessage: "Empty message or messages with more than 140 characters are not allowed!", message: ""})
@@ -78,7 +77,6 @@ export class ChatPage extends Component {
     }
 
     logout = async () => {
-        console.log("Trying to logout...")
         const object = {
             myUsername: this.props.myUsername,
             loggedInID: this.props.loggedInID

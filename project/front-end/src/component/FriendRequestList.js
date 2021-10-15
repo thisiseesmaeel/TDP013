@@ -14,7 +14,6 @@ export class FriendRequestList extends Component {
     }
 
     updateFriendRequestList = async () => {
-        console.log("Checking if there is newer friend request list...")
         let updatedFriendRequests = null
         const object = {
             myUsername: this.props.myUsername,
@@ -40,7 +39,6 @@ export class FriendRequestList extends Component {
     }
 
     acceptRequest = async (friendFirstname, friendLastname, friendUsername) => {
-        console.log(`Accepting friend request from ${friendFirstname} ${friendLastname} with username of ${friendUsername}`)
         const object = {
             myUsername: this.props.myUsername,
             loggedInID: this.props.loggedInID,
@@ -62,12 +60,10 @@ export class FriendRequestList extends Component {
         })
 
         let updatedFriendRequests = await this.updateFriendRequestList()
-        console.log("New friend request list detected. Updating friend request list...")
         this.setState({friendRequestList: updatedFriendRequests})     
     }
 
     ignoreRequest = async (friendFirstname, friendLastname, friendUsername) => {
-        console.log(`Ignoring friend request from ${friendFirstname} ${friendLastname} with username of ${friendUsername}`)
         const object = {
             myUsername: this.props.myUsername,
             loggedInID: this.props.loggedInID,
@@ -89,7 +85,6 @@ export class FriendRequestList extends Component {
         })
 
         let updatedFriendRequests = await this.updateFriendRequestList()
-        console.log("New friend request list detected. Updating friend request list...")
         this.setState({friendRequestList: updatedFriendRequests})     
     }
 
@@ -97,10 +92,8 @@ export class FriendRequestList extends Component {
         this.myInterval = setInterval(async () => {
             let updatedFriendRequests = await this.updateFriendRequestList()
             if( JSON.stringify(updatedFriendRequests) !== JSON.stringify(this.state.friendRequestList) ) {
-                    console.log("New friend request list detected. Updating friend request list...")
                     this.setState({friendRequestList: updatedFriendRequests})
-                }
-            else{ console.log("There is no new friend request.") }
+            }
         }, 10000)
     }
 

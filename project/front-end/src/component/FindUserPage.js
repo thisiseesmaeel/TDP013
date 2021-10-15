@@ -10,7 +10,6 @@ export class FindUserPage extends Component {
     }
 
     logout = async () => {
-        console.log("Trying to logout...")
         const object = {
             myUsername: this.props.data.username,
             loggedInID: this.props.data.loggedInID

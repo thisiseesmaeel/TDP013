@@ -38,7 +38,6 @@ export class FoundUserList extends Component {
             foundUsers: []})
         }
         else{
-            console.log("Trying find some new friends for you...")
             const object = {
                 myUsername: this.props.data.username,
                 loggedInID: this.props.data.loggedInID,

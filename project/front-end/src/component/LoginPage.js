@@ -17,10 +17,6 @@ export class LoginPage extends Component {
         this.login = this.login.bind(this);
     }
 
-    componentDidMount(){
-        console.log("Login page is loaded!")
-    }
-
     handleChangeUsername(event) {
         this.setState({ username: event.target.value });
     }
@@ -30,7 +26,6 @@ export class LoginPage extends Component {
     }
 
     login(){
-        console.log("I am trying to log in ... ")
         let hashObj = new jsSHA("SHA-512", "TEXT", {numRounds: 1});
         hashObj.update(this.state.password)
         let object = {

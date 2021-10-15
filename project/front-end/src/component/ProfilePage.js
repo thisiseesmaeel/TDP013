@@ -14,12 +14,10 @@ export class ProfilePage extends Component {
     }
 
     logout = async () => {
-        console.log("Trying to logout...")
         const object = {
             myUsername: this.props.data.username,
             loggedInID: this.props.data.loggedInID
         }
-        console.log(object)
         await fetch("http://localhost:3000/logout", {
             method: 'POST',
             headers: {
@@ -62,9 +60,6 @@ export class ProfilePage extends Component {
     }
 
     render() {
-        console.log("This data is comming from my parent component:")
-        console.log(this.props.data)
-
         return (
             <div>
                 <div className="primary-box p-3 topheader">
