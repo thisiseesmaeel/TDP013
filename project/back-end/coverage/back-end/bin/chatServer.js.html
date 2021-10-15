@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">28.57% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>4/14</span>
+                <span class='fraction'>14/14</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">20% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>1/5</span>
+                <span class='fraction'>5/5</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">28.57% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>4/14</span>
+                <span class='fraction'>14/14</span>
             </div>
         
             
@@ -55,7 +55,7 @@
             Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
         </p>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -80,27 +80,25 @@
 <a name='L21'></a><a href='#L21'>21</a>
 <a name='L22'></a><a href='#L22'>22</a>
 <a name='L23'></a><a href='#L23'>23</a>
-<a name='L24'></a><a href='#L24'>24</a>
-<a name='L25'></a><a href='#L25'>25</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L24'></a><a href='#L24'>24</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -109,22 +107,21 @@
 &nbsp;
     const io = require("socket.io")(server, { cors: {origin: "*"} })
     let userChatroom = new Map()
-    io.on('connection', <span class="fstat-no" title="function not covered" >so</span>cket =&gt; {
-&nbsp;
-<span class="cstat-no" title="statement not covered" >        socket.on("join-room", <span class="fstat-no" title="function not covered" >ro</span>om =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >            userChatroom.set(socket.id, room)</span>
-<span class="cstat-no" title="statement not covered" >            socket.to(room).emit("chat message", "joined to the room")</span>
-<span class="cstat-no" title="statement not covered" >            socket.join(room)</span>
+    io.on('connection', socket =&gt; {
+        socket.on("join-room", room =&gt; {
+            userChatroom.set(socket.id, room)
+            socket.to(room).emit("chat message", "joined to the room")
+            socket.join(room)
         })
         
-<span class="cstat-no" title="statement not covered" >        socket.on("chat message", <span class="fstat-no" title="function not covered" >(m</span>sg, room) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >            socket.to(room).emit("chat message", msg)</span>
+        socket.on("chat message", (msg, room) =&gt; {
+            socket.to(room).emit("chat message", msg)
         })
         
-<span class="cstat-no" title="statement not covered" >        socket.on('disconnect', <span class="fstat-no" title="function not covered" >()</span> =&gt;{</span>
-            let room = <span class="cstat-no" title="statement not covered" >userChatroom.get(socket.id)</span>
-<span class="cstat-no" title="statement not covered" >            userChatroom.delete(socket.id)</span>
-<span class="cstat-no" title="statement not covered" >            socket.to(room).emit("chat message", "left the room.")</span>
+        socket.on('disconnect', () =&gt;{
+            let room = userChatroom.get(socket.id)
+            userChatroom.delete(socket.id)
+            socket.to(room).emit("chat message", "left the room.")
         })
     })
 }
@@ -136,7 +133,7 @@ module.exports = { makeChatServer };</pre></td></tr></table></pre>
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Fri Oct 15 2021 16:22:13 GMT+0200 (Central European Summer Time)
+                at Fri Oct 15 2021 18:50:59 GMT+0200 (Central European Summer Time)
             </div>
         </div>
         <script src="../../prettify.js"></script>
