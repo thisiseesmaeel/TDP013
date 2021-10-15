@@ -3,7 +3,6 @@ function makeChatServer (server){
     const io = require("socket.io")(server, { cors: {origin: "*"} })
     let userChatroom = new Map()
     io.on('connection', socket => {
-
         socket.on("join-room", room => {
             userChatroom.set(socket.id, room)
             socket.to(room).emit("chat message", "joined to the room")

@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">22.22% </span>
+                <span class="strong">66.66% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>6/27</span>
+                <span class='fraction'>18/27</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">62.5% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/16</span>
+                <span class='fraction'>10/16</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/3</span>
+                <span class='fraction'>3/3</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">24% </span>
+                <span class="strong">72% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>6/25</span>
+                <span class='fraction'>18/25</span>
             </div>
         
             
@@ -55,7 +55,7 @@
             Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
         </p>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -103,28 +103,28 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -141,29 +141,29 @@ const { MongoClient } = require('mongodb');
 const url = "mongodb://localhost:27017/";
 &nbsp;
 /* show friend list. */
-router.post('/', <span class="fstat-no" title="function not covered" >fu</span>nction(req, res) {
-    const { myUsername, loggedInID} = <span class="cstat-no" title="statement not covered" >req.body;</span>
-<span class="cstat-no" title="statement not covered" >    if(typeof(myUsername) != "string" || typeof(loggedInID) != "number"){ </span>
+router.post('/', function(req, res) {
+    const { myUsername, loggedInID} = req.body;
+    <span class="missing-if-branch" title="if path not taken" >I</span>if(typeof(myUsername) != "string" || typeof(loggedInID) != "number"){ 
 <span class="cstat-no" title="statement not covered" >        res.status(400).send("Wrong parameter!");</span>
     }
     else{
-<span class="cstat-no" title="statement not covered" >        MongoClient.connect(url,<span class="fstat-no" title="function not covered" >(e</span>rror, database) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >            if(error) { <span class="cstat-no" title="statement not covered" >throw error; </span>}</span>
-            let dbo = <span class="cstat-no" title="statement not covered" >database.db("database");</span>
-<span class="cstat-no" title="statement not covered" >            dbo.collection("users").find({"username": myUsername}).toArray(<span class="fstat-no" title="function not covered" >(e</span>rr, result) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >                if(err){ <span class="cstat-no" title="statement not covered" >throw err; </span>}</span>
-<span class="cstat-no" title="statement not covered" >                if(result.length &lt;= 0){</span>
+        MongoClient.connect(url,(error, database) =&gt; {
+            <span class="missing-if-branch" title="if path not taken" >I</span>if(error) { <span class="cstat-no" title="statement not covered" >throw error; </span>}
+            let dbo = database.db("database");
+            dbo.collection("users").find({"username": myUsername}).toArray((err, result) =&gt; {
+                <span class="missing-if-branch" title="if path not taken" >I</span>if(err){ <span class="cstat-no" title="statement not covered" >throw err; </span>}
+                <span class="missing-if-branch" title="if path not taken" >I</span>if(result.length &lt;= 0){
 <span class="cstat-no" title="statement not covered" >                    res.status(404).send("Not found");</span>
 <span class="cstat-no" title="statement not covered" >                    database.close();</span>
                 }
-                else <span class="cstat-no" title="statement not covered" >if(result.length &gt; 1){</span>
+                else <span class="missing-if-branch" title="if path not taken" >I</span>if(result.length &gt; 1){
 <span class="cstat-no" title="statement not covered" >                    res.status(500).send("Internal Server Error!");</span>
 <span class="cstat-no" title="statement not covered" >                    database.close();</span>
                 }
-                else <span class="cstat-no" title="statement not covered" >if(result[0].loggedInID == loggedInID &amp;&amp; result[0].loggedInID != null)</span>
+                else <span class="missing-if-branch" title="else path not taken" >E</span>if(result[0].loggedInID == loggedInID &amp;&amp; result[0].loggedInID != null)
                 {
-<span class="cstat-no" title="statement not covered" >                    res.status(200).send(result[0].friends);</span>
-<span class="cstat-no" title="statement not covered" >                    database.close();</span>
+                    res.status(200).send(result[0].friends);
+                    database.close();
                 }else{
 <span class="cstat-no" title="statement not covered" >                    res.status(401).send("Unauthorized!");</span>
 <span class="cstat-no" title="statement not covered" >                    database.close();</span>
@@ -181,7 +181,7 @@ module.exports = router;</pre></td></tr></table></pre>
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Fri Oct 15 2021 15:26:57 GMT+0200 (Central European Summer Time)
+                at Fri Oct 15 2021 16:22:13 GMT+0200 (Central European Summer Time)
             </div>
         </div>
         <script src="../../prettify.js"></script>

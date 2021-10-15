@@ -22,6 +22,7 @@
     "nyc": "^15.1.0",
     "should": "^13.2.3",
     "socket.io": "^4.2.0",
+    "socket.io-client": "^4.3.0",
     "superagent": "^6.1.0",
     "xss-clean": "^0.1.1"
   },
