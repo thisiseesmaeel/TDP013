@@ -44,59 +44,62 @@ describe('Get all messages', () => {
   })
 })
 
-  describe('Changing status code of first message', () => {
-    it('Should change the status to "read"', (done) => {
-      superagent.post(url + 'flag')
-      .send({id: "6156c2a539b69bed2864fbdd", status: "read"})
+describe('Changing status code of first message', () => {
+  it('Should change the status to "read"', (done) => {
+    superagent.post(url + 'flag')
+    .send({id: "6156c2a539b69bed2864fbdd", status: "read"})
+    .then((res) => {
+      if(res.statusCode == 200)
+      {
+        done();
+      }
+    })
+    .catch((err) => {
+      done(err.status);
+    })
+  
+  })
+})
+
+describe('Changing status code of first message', () => {
+  it('Should change the status to "unread"', (done) => {
+    superagent.post(url + 'flag')
+    .send({id: "6156c2a539b69bed2864fbdd", status: "unread"})
+    .then((res) => {
+      if(res.statusCode == 200)
+      {
+        done();
+      }
+    })
+    .catch((err) => {
+      done(err.status);
+    })
+  })
+})
+
+
+  describe('Get one specific message', () => {
+    it('Should return the desired message', (done) => {
+      superagent.get(url + 'get/?id=6156c2a539b69bed2864fbdd')
       .then((res) => {
-        if(res.statusCode == 200)
+        if(res.statusCode == 200 && res.body[0].message == "This is a simple message!"
+        && res.body[0].status == "unread")
         {
-          done();
+          done();      
         }
       })
       .catch((err) => {
-        done(err.status);
-      })
-    
-    })
-  })
-
-  describe('Changing status code of first message', () => {
-    it('Should change the status to "unread"', (done) => {
-      superagent.post(url + 'flag')
-      .send({id: "6156c2a539b69bed2864fbdd", status: "unread"})
-      .then((res) => {
-        if(res.statusCode == 200)
-        {
-          done();
-        }
-      })
-      .catch((err) => {
-        done(err.status);
+        done(new Error("Got statuscode " + err.status))
       })
     })
   })
-
-
-  // describe('Get one specific message', () => {
-  //   it('Should return the desired message', () => {
-  //     superagent.get(url + 'get/?id=6156c2a539b69bed2864fbdd', (err, res) => {
-  //       //if(err) {console.log(err)}
-  //       const message = res.body[0].message
-  //       const status = res.body[0].status
-  //       assert.equal(res.statusCode, 200)
-  //       assert.equal(message, "This is a simple message!")
-  //       assert.equal(status, "unread")
-  //     })
-  //   })
-  // })
 
   ////////////// 405 error
-  describe('405 error', () => {
+  describe('Trying to use wrong method "Post" to get a specific message', () => {
     it('should return statuscode 405', (done) => {
-      superagent.post(url + "get", function(err, res) {
+      superagent.post(url + "get", (err, res) => {
           assert.equal(res.statusCode, 405)
-        done();
+          done();
       })
     })
   })
@@ -119,7 +122,6 @@ describe('Get all messages', () => {
     it('should return statuscode 405', (done) => {
       superagent.post(url + "getall")
       .catch((err)=>{
-        //console.log(err.status)
         if(err.status == 405){
           done()
         }
@@ -130,9 +132,9 @@ describe('Get all messages', () => {
     })
   })
 
-  describe('405 error', () => {
+  describe('Trying to use wrong method "Get" to change status of messages.', () => {
     it('should return statuscode 405', (done) => {
-      superagent.get(url + "flag", function(err, res) {
+      superagent.get(url + "flag", (err, res) => {
           assert.equal(res.statusCode, 405)
         done();
       })
@@ -144,7 +146,7 @@ describe('Get all messages', () => {
   /////////////// Error 404
   describe('Trying to reach /lol with a get method', () => {
     it('should return statuscode 404', (done) => {
-      superagent.get(url + "/lol", function(err, res) {
+      superagent.get(url + "/lol", (err, res) => {
         assert.equal(res.statusCode, 404)
         done();
       })
@@ -214,14 +216,24 @@ describe('Trying to post a message with more than 140 characters.', () => {
 })
 
 describe('Trying to get a message with an invalid ID.', () => {
-  it('Should return 400 error', () => {
-    superagent.get(url + 'get?id=61424edbae0a291a8c3fd358', (res, err) => {
-        assert.equal(res.status, 400)
+  it('Should return 400 error', (done) => {
+    superagent.get(url + 'get?id=61424edbae0a291a8c3fd358')
+    .then((res)=>{
+      done(new Error("Got statuscode " + res.statusCode))
+    })
+    .catch((err) => {
+      if(err.status == 400){
+        done()
+      }
+      else{
+        done(new Error("Got statuscode " + err.status))
+      }
+      
     })
   })
 })
 after( () => {
-  closeServer();
+ closeServer();
   }); 
 
 })
