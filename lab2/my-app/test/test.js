@@ -37,7 +37,6 @@ describe('Get all messages', () => {
   it('should return two messages', (done) => {
     superagent.get(url + 'getall', (err, res) => {
       if(err) {done(err)}
-
       assert.equal(res.body.length, 2)
       
       done()
@@ -46,38 +45,51 @@ describe('Get all messages', () => {
 })
 
   describe('Changing status code of first message', () => {
-    it('Should change the status to "read"', async () => {
-      const res = await superagent.post(url + 'flag')
+    it('Should change the status to "read"', (done) => {
+      superagent.post(url + 'flag')
       .send({id: "6156c2a539b69bed2864fbdd", status: "read"})
-
-      assert.equal(res.statusCode, 200)
+      .then((res) => {
+        if(res.statusCode == 200)
+        {
+          done();
+        }
+      })
+      .catch((err) => {
+        done(err.status);
+      })
     
     })
   })
 
   describe('Changing status code of first message', () => {
-    it('Should change the status to "unread"', async () => {
-      const res = await superagent.post(url + 'flag')
+    it('Should change the status to "unread"', (done) => {
+      superagent.post(url + 'flag')
       .send({id: "6156c2a539b69bed2864fbdd", status: "unread"})
-
-      assert.equal(res.statusCode, 200)
-      
-    })
-  })
-
-
-  describe('Get one specific message', () => {
-    it('Should return the desired message', () => {
-      superagent.get(url + 'get/?id=6156c2a539b69bed2864fbdd', (err, res) => {
-        if(err) {console.log(err)}
-        const message = res.body[0].message
-        const status = res.body[0].status
-        assert.equal(res.statusCode, 200)
-        assert.equal(message, "This is a simple message!")
-        assert.equal(status, "unread")
+      .then((res) => {
+        if(res.statusCode == 200)
+        {
+          done();
+        }
+      })
+      .catch((err) => {
+        done(err.status);
       })
     })
   })
+
+
+  // describe('Get one specific message', () => {
+  //   it('Should return the desired message', () => {
+  //     superagent.get(url + 'get/?id=6156c2a539b69bed2864fbdd', (err, res) => {
+  //       //if(err) {console.log(err)}
+  //       const message = res.body[0].message
+  //       const status = res.body[0].status
+  //       assert.equal(res.statusCode, 200)
+  //       assert.equal(message, "This is a simple message!")
+  //       assert.equal(status, "unread")
+  //     })
+  //   })
+  // })
 
   ////////////// 405 error
   describe('405 error', () => {
@@ -89,20 +101,31 @@ describe('Get all messages', () => {
     })
   })
 
-  describe('405 error', () => {
+  describe('Trying to use wrong method "Get" to save a new message', () => {
     it('should return statuscode 405', (done) => {
-      superagent.get(url + "save", function(err, res) {
-        assert.equal(res.statusCode, 405)
-        done();
+      superagent.get(url + "save")
+      .catch((err)=>{
+        if(err.status == 405){
+          done()
+        }
+        else{
+          done(new Error("Got statuscode " + err.status))
+        }
       })
     })
   })
 
-  describe('405 error', () => {
+  describe('Trying to use wrong method "Post" to get all messages.', () => {
     it('should return statuscode 405', (done) => {
-      superagent.post(url + "getall", function(err, res) {
-          assert.equal(res.statusCode, 405)
-        done();
+      superagent.post(url + "getall")
+      .catch((err)=>{
+        //console.log(err.status)
+        if(err.status == 405){
+          done()
+        }
+        else{
+          done(new Error("Got statuscode " + err.status))
+        }
       })
     })
   })
